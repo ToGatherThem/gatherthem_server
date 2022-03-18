@@ -4,5 +4,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface CollectionsDao extends MongoRepository<CollectionsEntity, String> {
+public interface CollectionsDao extends MongoRepository<CollectionEntity, String> {
 }

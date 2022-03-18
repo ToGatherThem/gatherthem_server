@@ -1,13 +1,25 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition;
 
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.Mapper;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.services.CollectionsService;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos.CollectionDto;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/collections")
 public class CollectionsController {
 
+    private CollectionsService collectionsService;
+
+    public CollectionsController(CollectionsService collectionsService) {
+        this.collectionsService = collectionsService;
+    }
 
     @GetMapping
     public String getStaticData(){
@@ -59,6 +71,22 @@ public class CollectionsController {
                 "            ]\n" +
                 "        }\n" +
                 "]";
+    }
+
+    @GetMapping("/v2")
+    public ResponseEntity<List<CollectionDto>> getCollection(){
+        try{
+            List<CollectionDto> collectionDtos = collectionsService.getCollections().stream().map(Mapper::mapFromModelToDto).collect(Collectors.toList());
+            if (collectionDtos.isEmpty()){
+                return ResponseEntity.noContent().build();
+            }
+            else {
+                return ResponseEntity.ok(collectionDtos);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
 }
