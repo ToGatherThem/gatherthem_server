@@ -1,0 +1,1 @@
+conn = new Mongo("localhost:27017");
