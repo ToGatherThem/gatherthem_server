@@ -1,17 +1,19 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.commons.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 public class UserEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @Type(type = "uuid-char")
     @Column(name = "id")
     private UUID id;
 
@@ -26,7 +28,7 @@ public class UserEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "UserAuthority",
+            name = "user_authority",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "authorityCode")
     )

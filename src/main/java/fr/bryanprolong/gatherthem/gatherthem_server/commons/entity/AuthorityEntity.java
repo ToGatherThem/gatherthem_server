@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Authority")
+@Table(name = "authority")
 public class AuthorityEntity {
     @Id
     @Column(name = "code", nullable = false)
