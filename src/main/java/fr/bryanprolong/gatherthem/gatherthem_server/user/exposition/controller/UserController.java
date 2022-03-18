@@ -1,11 +1,12 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.controller;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.Utils;
-import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserCredentials;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.service.UserService;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.EmailAlreadyExistException;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserDto;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserRegisterDto;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserRegisterMapper;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +35,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody UserCredentials userCredentials) {
+    public ResponseEntity<UserDto> login(@RequestBody UserCredentials userCredentials) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userCredentials.getUsername(), userCredentials.getPassword(), new ArrayList<>()));
             if (authentication.isAuthenticated()) {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                return ResponseEntity.ok().build();
+
+                AppUser connectedUser = (AppUser) authentication.getPrincipal();
+
+                UserDto userDto = new UserDto();
+
+                userDto.setId(connectedUser.getId());
+                userDto.setUsername(connectedUser.getUsername());
+                userDto.setEmail(connectedUser.getEmail());
+
+                return ResponseEntity.ok().body(userDto);
             } else return ResponseEntity.status(401).build();
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).build();

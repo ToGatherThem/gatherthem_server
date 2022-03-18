@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,7 +71,8 @@ public class UserEntity {
     }
 
     public List<AuthorityEntity> getAuthorities() {
-        return authorities;
+        if(authorities != null) return authorities;
+        else return new ArrayList<>();
     }
 
     public void setAuthorities(List<AuthorityEntity> authorities) {

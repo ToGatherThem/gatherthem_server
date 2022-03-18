@@ -1,5 +1,7 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class User {
@@ -7,6 +9,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private List<Authority> authorities;
 
     public User() {
     }
@@ -41,5 +44,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Authority> getAuthorities() {
+        if(authorities != null) return authorities;
+        else return new ArrayList<>();
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }

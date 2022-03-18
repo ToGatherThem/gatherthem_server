@@ -3,12 +3,9 @@ package fr.bryanprolong.gatherthem.gatherthem_server.user.infrastructure.reposit
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.dao.UserDao;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
-import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserRegister;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class UserRepository {
@@ -18,11 +15,11 @@ public class UserRepository {
         this.userDao = userDao;
     }
 
-    public Optional<User> findUserByUsername(String username) {
+    public Optional<User> findByUsername(String username) {
         return userDao.findByUsername(username).map(UserMapper::mapEntityToModel);
     }
 
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userDao.findByEmail(email).map(UserMapper::mapEntityToModel);
     }
 
