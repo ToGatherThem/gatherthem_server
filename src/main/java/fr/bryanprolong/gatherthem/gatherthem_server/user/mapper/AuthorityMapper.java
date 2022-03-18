@@ -2,6 +2,7 @@ package fr.bryanprolong.gatherthem.gatherthem_server.user.mapper;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.AuthorityEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.Authority;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.AuthorityDto;
 
 public class AuthorityMapper {
     public static Authority mapEntityToModel(AuthorityEntity authorityEntity) {
@@ -20,5 +21,14 @@ public class AuthorityMapper {
         authorityEntity.setName(authority.getName());
 
         return authorityEntity;
+    }
+
+    public static AuthorityDto mapModelToDto(Authority authority) {
+        AuthorityDto authorityDto = new AuthorityDto();
+
+        authorityDto.setCode(authority.getCode());
+        authorityDto.setName(authority.getName());
+
+        return authorityDto;
     }
 }

@@ -1,7 +1,9 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.mapper;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserDto;
 
 public class UserMapper {
     public static User mapEntityToModel(UserEntity userEntity) {
@@ -26,5 +28,16 @@ public class UserMapper {
         userEntity.setAuthorities(user.getAuthorities().stream().map(AuthorityMapper::mapModelToEntity).toList());
 
         return userEntity;
+    }
+
+    public static UserDto mapAppUserToUserDto(AppUser appUser) {
+        UserDto userDto = new UserDto();
+
+        userDto.setId(appUser.getId());
+        userDto.setUsername(appUser.getUsername());
+        userDto.setEmail(appUser.getEmail());
+        userDto.setAuthorities(appUser.getAuthorityList().stream().map(AuthorityMapper::mapModelToDto).toList());
+
+        return userDto;
     }
 }

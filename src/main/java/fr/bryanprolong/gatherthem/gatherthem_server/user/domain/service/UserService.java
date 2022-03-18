@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
                     user.getEmail(),
                     user.getUsername(),
                     user.getPassword(),
-                    AuthorityUtils.commaSeparatedStringToAuthorityList(stringAuthorities)
+                    user.getAuthorities()
             );
         } else throw new UsernameNotFoundException("");
     }

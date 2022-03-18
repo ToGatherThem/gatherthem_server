@@ -1,20 +1,37 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.domain;
 
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.Authority;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public class AppUser extends User {
     private final UUID id;
     private final String email;
+    private final List<Authority> authorityList;
 
-    public AppUser(UUID id, String email, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+    public AppUser(UUID id, String email, String username, String password, List<Authority> authorities) {
+        super(
+                username,
+                password,
+                AuthorityUtils.commaSeparatedStringToAuthorityList(
+                        String.join(
+                                ",",
+                                authorities.stream()
+                                        .map(Authority::getCode)
+                                        .toList()
+                        )
+                )
+        );
+
         this.id = id;
         this.email = email;
+        this.authorityList = authorities;
     }
 
     public UUID getId() {
@@ -23,6 +40,10 @@ public class AppUser extends User {
 
     public String getEmail() {
         return email;
+    }
+
+    public List<Authority> getAuthorityList() {
+        return authorityList;
     }
 
     @Override

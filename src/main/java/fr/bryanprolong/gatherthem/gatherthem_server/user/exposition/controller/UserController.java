@@ -8,17 +8,16 @@ import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.EmailAlreadyE
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserDto;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserRegisterDto;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserMapper;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserRegisterMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -43,11 +42,7 @@ public class UserController {
 
                 AppUser connectedUser = (AppUser) authentication.getPrincipal();
 
-                UserDto userDto = new UserDto();
-
-                userDto.setId(connectedUser.getId());
-                userDto.setUsername(connectedUser.getUsername());
-                userDto.setEmail(connectedUser.getEmail());
+                UserDto userDto = UserMapper.mapAppUserToUserDto(connectedUser);
 
                 return ResponseEntity.ok().body(userDto);
             } else return ResponseEntity.status(401).build();
@@ -73,5 +68,15 @@ public class UserController {
                 return ResponseEntity.status(409).body("EMAIL_ALREADY_EXIST");
             }
         }
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserDto> getProfile() {
+        AppUser connectedUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        UserDto userDto = UserMapper.mapAppUserToUserDto(connectedUser);
+
+        return ResponseEntity.ok().body(userDto);
     }
 }
