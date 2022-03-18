@@ -10,6 +10,7 @@ import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserRegi
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserRegisterMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,8 +41,11 @@ public class UserController {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 return ResponseEntity.ok().build();
             } else return ResponseEntity.status(401).build();
-        } catch (Exception e) {
+        } catch (BadCredentialsException e) {
             return ResponseEntity.status(401).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
     }
 

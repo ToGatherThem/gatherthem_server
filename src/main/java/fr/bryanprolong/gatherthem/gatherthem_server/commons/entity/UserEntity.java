@@ -14,7 +14,7 @@ public class UserEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Type(type = "uuid-char")
-    @Column(name = "id")
+    @Column(name = "user_id")
     private UUID id;
 
     @Column(name = "username", nullable = false, unique = true)
@@ -29,8 +29,8 @@ public class UserEntity {
     @ManyToMany
     @JoinTable(
             name = "user_authority",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "authorityCode")
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_code")
     )
     private List<AuthorityEntity> authorities;
 

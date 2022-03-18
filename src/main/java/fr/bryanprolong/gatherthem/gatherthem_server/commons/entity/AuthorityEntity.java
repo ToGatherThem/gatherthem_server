@@ -7,7 +7,7 @@ import java.util.List;
 @Table(name = "authority")
 public class AuthorityEntity {
     @Id
-    @Column(name = "code", nullable = false)
+    @Column(name = "authority_code", nullable = false)
     private String code;
 
     @Column(name = "name", nullable = false)
