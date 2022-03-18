@@ -11,14 +11,16 @@ services:
       LANG : C.UTF-8
   mongo:
     image: mongo:5.0.6
+    container_name: mongo_db
     restart: always
     ports:
       - "27017:27017"
     environment:
+      MONGO_INITDB_DATABASE: GatherThemMongo
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
-      - ./main/ressources/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./src/main/resources/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
   mongo-express:
     image: mongo-express:0.54.0
     restart: always
@@ -27,4 +29,4 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017
