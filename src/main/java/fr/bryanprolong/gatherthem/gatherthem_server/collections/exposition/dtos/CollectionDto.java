@@ -1,11 +1,22 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos;
 
+import java.util.UUID;
+
 public class CollectionDto {
 
+    private String id;
     private String type;
     private String name;
     private String description;
     private int creationDate;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getType() {
         return type;

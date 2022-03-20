@@ -1,13 +1,13 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.Mapper;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models.CollectionModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.services.CollectionsService;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos.CollectionDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,4 +89,15 @@ public class CollectionsController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionDto newColl){
+        try{
+            CollectionModel coll = Mapper.mapFromDtoToModel(newColl);
+            CollectionModel res = collectionsService.save(coll);
+            return ResponseEntity.created(URI.create("/collections/" + res.getUuid())).body(Mapper.mapFromModelToDto(res));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

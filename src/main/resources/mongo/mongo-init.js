@@ -16,7 +16,7 @@ db.createCollection('collections');
 
 db.collections.insertMany([
     {
-        "id": "a36f30f0-63aa-43c5-b9b6-09f94b9a0644",
+        "id": "623717796ce0874ab2388089",
         "owner_id": "51e18d3c-88f5-4917-97d1-2ee3ed9be3b5",
         "type": "Livres",
         "name": "Mes livres de fantasy",

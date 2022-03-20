@@ -4,19 +4,19 @@ import java.util.UUID;
 
 public class CollectionModel {
 
-    //private UUID uuid;
+    private String uuid;
     private String type;
     private String name;
     private String description;
     private int creation_date;
 
-    /*public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
-    }*/
+    }
 
     public String getType() {
         return type;

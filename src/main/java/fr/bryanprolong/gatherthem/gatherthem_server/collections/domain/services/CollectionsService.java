@@ -18,4 +18,8 @@ public class CollectionsService {
     public List<CollectionModel> getCollections(){
         return collectionsRepository.getCollections();
     }
+
+    public CollectionModel save(CollectionModel newColl){
+        return collectionsRepository.save(newColl);
+    }
 }

@@ -8,7 +8,7 @@ public class Mapper {
 
     public static CollectionModel mapFromEntityToModel(CollectionEntity collectionEntity){
         CollectionModel collectionModel = new CollectionModel();
-        //collectionModel.setUuid(collectionEntity.getId());
+        collectionModel.setUuid(collectionEntity.getId());
         collectionModel.setName(collectionEntity.getName());
         collectionModel.setDescription(collectionEntity.getDescription());
         collectionModel.setType(collectionEntity.getType());
@@ -18,6 +18,7 @@ public class Mapper {
 
     public static CollectionDto mapFromModelToDto(CollectionModel collectionModel){
         CollectionDto collectionDto = new CollectionDto();
+        collectionDto.setId(collectionModel.getUuid());
         collectionDto.setType(collectionModel.getType());
         collectionDto.setCreationDate(collectionModel.getCreation_date());
         collectionDto.setDescription(collectionModel.getDescription());
@@ -27,19 +28,11 @@ public class Mapper {
 
     public static CollectionModel mapFromDtoToModel(CollectionDto collectionDto){
         CollectionModel collectionModel = new CollectionModel();
+        collectionModel.setUuid(collectionDto.getId());
         collectionModel.setName(collectionDto.getName());
         collectionModel.setDescription(collectionDto.getDescription());
         collectionModel.setType(collectionDto.getType());
         collectionModel.setCreation_date(collectionDto.getCreationDate());
         return collectionModel;
     }
-
-    /*public static CollectionEntity mapFromModelToEntity(CollectionModel collectionModel){
-        CollectionEntity collectionEntity = new CollectionEntity();
-        collectionEntity.setType(collectionEntity.getType());
-        collectionEntity.setCreationDate(collectionEntity.getCreation_date());
-        collectionEntity.setDescription(collectionEntity.getDescription());
-        collectionEntity.setName(collectionEntity.getName());
-        return collectionEntity;
-    }*/
 }
