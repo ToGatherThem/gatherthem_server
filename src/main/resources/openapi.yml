@@ -67,6 +67,75 @@ paths:
                 $ref: '#/components/schemas/User'
         '403':
           description: L'utilisateur n'est pas connecté
+  /collections:
+    get:
+      summary: Consulter ses collections
+      tags:
+        - Collection
+      responses:
+        '200':
+          description: Liste des collections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collections'
+        '204':
+          description: Pas de collection pour l'utilisateur
+    post:
+      summary: Ajout d'une collection
+      tags:
+        - Collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionInfos'
+      responses:
+        '201':
+          description: La collection a été créée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+    patch:
+      summary: Modification d'une collection
+      tags:
+        - Collection
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionInfos'
+      responses:
+        '200':
+          description: La collection a été modifiée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        '204':
+          description: La collection n'a pas été modifié parce qu'elle n'a pas été trouvé
+    delete:
+      summary: Supprimer une collection
+      tags:
+        - Collection
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: La collection a été supprimée
+        '204':
+          description: La collection n'a pas été trouvée
 
 tags:
   - name: Utilisateur
@@ -117,3 +186,31 @@ components:
           type: string
         name:
           type: string
+    Collection:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        creationDate:
+          type: integer
+    Collections:
+      type: array
+      items:
+        $ref: '#/components/schemas/Collection'
+    CollectionInfos:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        creationDate:
+          type: integer
