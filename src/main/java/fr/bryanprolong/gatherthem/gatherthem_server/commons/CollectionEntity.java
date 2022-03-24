@@ -61,4 +61,20 @@ public class CollectionEntity {
     public void setCreated_at(int created_at) {
         this.created_at = created_at;
     }
+
+    public void updateData(CollectionEntity collInfos){
+        if(collInfos.name != null){
+            this.name = collInfos.name;
+        }
+        if(collInfos.type != null){
+            this.type = collInfos.type;
+        }
+        if(collInfos.description != null){
+            this.description = collInfos.description;
+        }
+        if(collInfos.created_at != 0){
+            this.created_at = collInfos.created_at;
+        }
+
+    }
 }

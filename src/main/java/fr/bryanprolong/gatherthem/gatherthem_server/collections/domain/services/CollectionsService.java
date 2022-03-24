@@ -1,6 +1,7 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.services;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models.CollectionModel;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.exception.NotFoundException;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.infrastructure.CollectionsRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,9 @@ public class CollectionsService {
 
     public CollectionModel save(CollectionModel newColl){
         return collectionsRepository.save(newColl);
+    }
+
+    public CollectionModel patch(String id, CollectionModel coll) throws NotFoundException {
+        return collectionsRepository.patch(id, coll);
     }
 }

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public interface CollectionsDao extends MongoRepository<CollectionEntity, UUID> {
+public interface CollectionsDao extends MongoRepository<CollectionEntity, String> {
 }

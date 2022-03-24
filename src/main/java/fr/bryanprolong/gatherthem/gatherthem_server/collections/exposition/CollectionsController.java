@@ -3,7 +3,9 @@ package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.Mapper;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models.CollectionModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.services.CollectionsService;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.exception.NotFoundException;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos.CollectionDto;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos.CollectionInformationsDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,59 +23,7 @@ public class CollectionsController {
         this.collectionsService = collectionsService;
     }
 
-    @GetMapping
-    public String getStaticData(){
-        return "[\n" +
-                "        {\n" +
-                "            \"id\": \"a36f30f0-63aa-43c5-b9b6-09f94b9a0644\",\n" +
-                "            \"owner_id\": \"51e18d3c-88f5-4917-97d1-2ee3ed9be3b5\",\n" +
-                "            \"type\": \"Livres\",\n" +
-                "            \"name\": \"Mes livres de fantasy\",\n" +
-                "            \"description\": \"J'adore vraiment beaucoup très très énormement ces livres\",\n" +
-                "            \"created_at\": 1647509337,\n" +
-                "            \"properties\" : [\n" +
-                "                {\n" +
-                "                    \"name\": \"Titre\",\n" +
-                "                    \"index\": 0\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"name\": \"Résumé\",\n" +
-                "                    \"index\": 2\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"name\": \"Auteur\",\n" +
-                "                    \"index\": 1\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"name\": \"Date de parution\",\n" +
-                "                    \"index\": 3\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"name\": \"ISBN\",\n" +
-                "                    \"index\": 4\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"name\": \"Date d'obtention\",\n" +
-                "                    \"index\": 5\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"items\": [\n" +
-                "                {\n" +
-                "                    \"id\": \"096e73bc-8eba-4f00-a831-7ba095da6d44\",\n" +
-                "                    \"created_at\": 1647509337,\n" +
-                "                    \"date_d_obtention\": \"\",\n" +
-                "                    \"titre\": \"Harry Potter à l'école des sorciers\",\n" +
-                "                    \"resume\": \"Le jour de ses onze ans, Harry Potter, un orphelin élevé par un oncle et une tante qui le détestent, voit son existence bouleversée. Un géant vient le chercher pour l'emmener à Poudlard, une école de sorcellerie ! Voler en balai, jeter des sorts, combattre les trolls : Harry se révèle un sorcier doué. Mais un mystère entoure sa naissance et l'effroyable V., le mage dont personne n'ose prononcer le nom.\",\n" +
-                "                    \"auteur\": \"J.K. Rowling\",\n" +
-                "                    \"date_de_parution\": \"\",\n" +
-                "                    \"isbn\": \"2070584623\"\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        }\n" +
-                "]";
-    }
-
-    @GetMapping("/v2")
+    @GetMapping()
     public ResponseEntity<List<CollectionDto>> getCollection(){
         try{
             List<CollectionDto> collectionDtos = collectionsService.getCollections().stream().map(Mapper::mapFromModelToDto).collect(Collectors.toList());
@@ -90,14 +40,30 @@ public class CollectionsController {
     }
 
     @PostMapping
-    public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionDto newColl){
+    public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionInformationsDto newColl){
         try{
-            CollectionModel coll = Mapper.mapFromDtoToModel(newColl);
+            CollectionModel coll = Mapper.mapFromInfosDtoToModel(newColl);
             CollectionModel res = collectionsService.save(coll);
             return ResponseEntity.created(URI.create("/collections/" + res.getUuid())).body(Mapper.mapFromModelToDto(res));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PatchMapping
+    public ResponseEntity<CollectionDto> changeCollection(@RequestParam("id") String id, @RequestBody CollectionInformationsDto newColl){
+        try{
+            CollectionModel coll = Mapper.mapFromInfosDtoToModel(newColl);
+            CollectionModel res = collectionsService.patch(id, coll);
+            return ResponseEntity.ok(Mapper.mapFromModelToDto(res));
+        }catch (NotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return  ResponseEntity.internalServerError().build();
         }
     }
 }
