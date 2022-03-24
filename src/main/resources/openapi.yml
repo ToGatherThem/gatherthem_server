@@ -1,0 +1,119 @@
+openapi: 3.0.0
+info:
+  title: GatherThem API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/
+    description: Serveur local de test
+paths:
+  /user/login:
+    post:
+      summary: Connexion à l'api
+      tags:
+        - Utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '200':    # status code
+          description: Résumé de l'utilisateur connecté
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Identifiant incorrect
+        '400':
+          description: Paramètres fournis invalide
+  /user/register:
+    post:
+      summary: Inscription à gatherthem
+      tags:
+        - Utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201': # status code
+          description: L'utilisateur à bien été créé
+        '400':
+          description: Paramètres fournis invalide
+        '409':
+          description: Nom d'utilisateur ou email déjà existant
+          content:
+            application/json:
+              schema:
+                type: string
+                enum:
+                  - "USERNAME_ALREADY_EXIST"
+                  - "EMAIL_ALREADY_EXIST"
+  /user/me:
+    get:
+      summary: Consulter son profil utilisateur
+      tags:
+        - Utilisateur
+      responses:
+        '200':
+          description: Profil de l'utilisateur connecté
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: L'utilisateur n'est pas connecté
+
+tags:
+  - name: Utilisateur
+    description: Gestion des utilisateurs
+  - name: Collection
+    description: Gestion des collections
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Authority'
+    UserCredentials:
+      type: object
+      properties:
+        username:
+          type: string
+          format: username
+        password:
+          type: string
+          format: password
+    UserRegister:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    Authority:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
