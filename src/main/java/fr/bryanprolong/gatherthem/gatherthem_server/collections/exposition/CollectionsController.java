@@ -3,7 +3,7 @@ package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.Mapper;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models.CollectionModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.services.CollectionsService;
-import fr.bryanprolong.gatherthem.gatherthem_server.collections.exception.NotFoundException;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos.CollectionDto;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos.CollectionInformationsDto;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,6 @@ public class CollectionsController {
                 return ResponseEntity.ok(collectionDtos);
             }
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -46,7 +45,6 @@ public class CollectionsController {
             CollectionModel res = collectionsService.save(coll);
             return ResponseEntity.created(URI.create("/collections/" + res.getUuid())).body(Mapper.mapFromModelToDto(res));
         }catch (Exception e){
-            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }
@@ -58,11 +56,21 @@ public class CollectionsController {
             CollectionModel res = collectionsService.patch(id, coll);
             return ResponseEntity.ok(Mapper.mapFromModelToDto(res));
         }catch (NotFoundException e) {
-            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
-        catch (Exception e){
-            e.printStackTrace();
+        catch(Exception e){
+            return  ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteCollection(@RequestParam("id") String id){
+        try{
+            collectionsService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }catch(Exception e){
             return  ResponseEntity.internalServerError().build();
         }
     }

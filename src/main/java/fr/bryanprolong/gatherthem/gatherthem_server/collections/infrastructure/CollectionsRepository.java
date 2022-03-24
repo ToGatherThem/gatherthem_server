@@ -2,7 +2,7 @@ package fr.bryanprolong.gatherthem.gatherthem_server.collections.infrastructure;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.Mapper;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models.CollectionModel;
-import fr.bryanprolong.gatherthem.gatherthem_server.collections.exception.NotFoundException;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.CollectionEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.CollectionsDao;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.MapperEnt;
@@ -43,7 +43,10 @@ public class CollectionsRepository {
         }
     }
 
-    public void delete(String id){
+    public void delete(String id) throws NotFoundException {
+        Optional<CollectionEntity> collection = collectionsDao.findById(id);
+        if (collection.isEmpty())
+            throw new NotFoundException();
         collectionsDao.deleteById(id);
     }
 }
