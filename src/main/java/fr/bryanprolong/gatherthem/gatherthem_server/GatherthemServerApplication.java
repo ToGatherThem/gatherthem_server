@@ -9,5 +9,4 @@ public class GatherthemServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(GatherthemServerApplication.class, args);
     }
-
 }

@@ -1,0 +1,216 @@
+openapi: 3.0.0
+info:
+  title: GatherThem API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Serveur local de test
+paths:
+  /user/login:
+    post:
+      summary: Connexion à l'api
+      tags:
+        - Utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCredentials'
+      responses:
+        '200':    # status code
+          description: Résumé de l'utilisateur connecté
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Identifiant incorrect
+        '400':
+          description: Paramètres fournis invalide
+  /user/register:
+    post:
+      summary: Inscription à gatherthem
+      tags:
+        - Utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201': # status code
+          description: L'utilisateur à bien été créé
+        '400':
+          description: Paramètres fournis invalide
+        '409':
+          description: Nom d'utilisateur ou email déjà existant
+          content:
+            application/json:
+              schema:
+                type: string
+                enum:
+                  - "USERNAME_ALREADY_EXIST"
+                  - "EMAIL_ALREADY_EXIST"
+  /user/me:
+    get:
+      summary: Consulter son profil utilisateur
+      tags:
+        - Utilisateur
+      responses:
+        '200':
+          description: Profil de l'utilisateur connecté
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '403':
+          description: L'utilisateur n'est pas connecté
+  /collections:
+    get:
+      summary: Consulter ses collections
+      tags:
+        - Collection
+      responses:
+        '200':
+          description: Liste des collections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collections'
+        '204':
+          description: Pas de collection pour l'utilisateur
+    post:
+      summary: Ajout d'une collection
+      tags:
+        - Collection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionInfos'
+      responses:
+        '201':
+          description: La collection a été créée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+    patch:
+      summary: Modification d'une collection
+      tags:
+        - Collection
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CollectionInfos'
+      responses:
+        '200':
+          description: La collection a été modifiée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        '204':
+          description: La collection n'a pas été modifié parce qu'elle n'a pas été trouvé
+    delete:
+      summary: Supprimer une collection
+      tags:
+        - Collection
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: La collection a été supprimée
+        '204':
+          description: La collection n'a pas été trouvée
+
+tags:
+  - name: Utilisateur
+    description: Gestion des utilisateurs
+  - name: Collection
+    description: Gestion des collections
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        authorities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Authority'
+    UserCredentials:
+      type: object
+      properties:
+        username:
+          type: string
+          format: username
+        password:
+          type: string
+          format: password
+    UserRegister:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+    Authority:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+    Collection:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        creationDate:
+          type: integer
+    Collections:
+      type: array
+      items:
+        $ref: '#/components/schemas/Collection'
+    CollectionInfos:
+      type: object
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        creationDate:
+          type: integer
