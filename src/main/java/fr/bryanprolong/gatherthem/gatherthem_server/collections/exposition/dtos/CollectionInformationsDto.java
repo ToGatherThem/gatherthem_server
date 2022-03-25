@@ -5,7 +5,7 @@ public class CollectionInformationsDto {
     private String type;
     private String name;
     private String description;
-    private int creationDate;
+    private long creationDate;
 
     public String getType() {
         return type;
@@ -31,11 +31,11 @@ public class CollectionInformationsDto {
         this.description = description;
     }
 
-    public int getCreationDate() {
+    public long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(int creationDate) {
+    public void setCreationDate(long creationDate) {
         this.creationDate = creationDate;
     }
 }

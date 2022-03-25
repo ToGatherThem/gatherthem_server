@@ -20,7 +20,7 @@ public class CollectionEntity {
     private String type;
     private String name;
     private String description;
-    private int created_at;
+    private long created_at;
 
     public String getId() {
         return _id;
@@ -54,7 +54,7 @@ public class CollectionEntity {
         this.description = description;
     }
 
-    public int getCreated_at() {
+    public long getCreated_at() {
         return created_at;
     }
 

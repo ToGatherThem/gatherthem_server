@@ -1,14 +1,12 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models;
 
-import java.util.UUID;
-
 public class CollectionModel {
 
     private String uuid;
     private String type;
     private String name;
     private String description;
-    private int creation_date;
+    private long creation_date;
 
     public String getUuid() {
         return uuid;
@@ -42,11 +40,11 @@ public class CollectionModel {
         this.description = description;
     }
 
-    public int getCreation_date() {
+    public long getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(int creation_date) {
+    public void setCreation_date(long creation_date) {
         this.creation_date = creation_date;
     }
 }
