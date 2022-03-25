@@ -27,12 +27,7 @@ public class CollectionsController {
     public ResponseEntity<List<CollectionDto>> getCollection(){
         try{
             List<CollectionDto> collectionDtos = collectionsService.getCollections().stream().map(Mapper::mapFromModelToDto).collect(Collectors.toList());
-            if (collectionDtos.isEmpty()){
-                return ResponseEntity.noContent().build();
-            }
-            else {
-                return ResponseEntity.ok(collectionDtos);
-            }
+            return ResponseEntity.ok(collectionDtos);
         }catch (Exception e){
             return ResponseEntity.internalServerError().build();
         }
