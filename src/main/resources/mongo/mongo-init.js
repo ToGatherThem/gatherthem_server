@@ -22,6 +22,7 @@ db.collections.insertMany([
         "name": "Mes livres de fantasy",
         "description": "J'adore vraiment beaucoup très très énormement ces livres",
         "created_at": 1647509337,
+        "ownerId": "a3387036-4946-11ec-81d3-0242ac130003",
         "fields" : [
             {
                 "name": "Titre",

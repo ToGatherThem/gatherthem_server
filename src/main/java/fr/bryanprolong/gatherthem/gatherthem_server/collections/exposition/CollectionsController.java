@@ -29,6 +29,7 @@ public class CollectionsController {
             List<CollectionDto> collectionDtos = collectionsService.getCollections().stream().map(Mapper::mapFromModelToDto).collect(Collectors.toList());
             return ResponseEntity.ok(collectionDtos);
         }catch (Exception e){
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

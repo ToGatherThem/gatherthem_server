@@ -6,6 +6,8 @@ import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundEx
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.CollectionEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.CollectionsDao;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.MapperEnt;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,14 +16,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class CollectionsRepository {
-    private CollectionsDao collectionsDao;
+    private final CollectionsDao collectionsDao;
 
     public CollectionsRepository(CollectionsDao collectionsDao) {
         this.collectionsDao = collectionsDao;
     }
 
     public List<CollectionModel> getCollections(){
-        List<CollectionEntity> collectionEntities = collectionsDao.findAll();
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<CollectionEntity> collectionEntities = collectionsDao.findByOwnerId(user.getId().toString());
         return collectionEntities.stream().map(Mapper::mapFromEntityToModel).collect(Collectors.toList());
     }
 

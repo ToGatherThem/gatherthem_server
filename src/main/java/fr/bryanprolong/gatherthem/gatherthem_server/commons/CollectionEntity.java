@@ -21,6 +21,7 @@ public class CollectionEntity {
     private String name;
     private String description;
     private long created_at;
+    private String ownerId;
 
     public String getId() {
         return _id;
@@ -60,6 +61,26 @@ public class CollectionEntity {
 
     public void setCreated_at(int created_at) {
         this.created_at = created_at;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public void setCreated_at(long created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public void updateData(CollectionEntity collInfos){
