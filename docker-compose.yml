@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: gatherthem
       LANG : C.UTF-8
     volumes:
-      - ./script/sql/createTable.sql:/docker-entrypoint-initdb.d/createTable.sql
+      - ./src/main/resources/sql/createTable.sql:/docker-entrypoint-initdb.d/createTable.sql
   mongo:
     image: mongo:5.0.6
     container_name: mongo_db
