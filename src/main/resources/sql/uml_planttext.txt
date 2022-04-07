@@ -1,0 +1,68 @@
+@startuml
+
+title Modélisation - Gatherthem
+
+class user {
+    id: UUID,
+    username: String,
+    password: String,
+    mail: String
+}
+
+class authority {
+  authority_code: String,
+  name: String
+}
+
+class user_authority
+
+class collection {
+    id: UUID,
+    name: String,
+    description: String
+    image: String,
+    creation_data: Date
+}
+
+class template {
+  id: UUID,
+  name: String,
+  description: String,
+  item_label_name: String
+  visibility: String
+}
+
+class property {
+    id: UUID,
+    name: String,
+    type: String
+}
+
+class item {
+    id: Int,
+    label: String
+    creation_date: Date,
+    obtention_date: Date,
+}
+
+class item_property {
+    id: UUID,
+    value: String
+}
+
+user "1..1"--"0..*" user_authority
+authority "1..1"--"0..*" user_authority
+
+user "1..1"--"0.." collection
+
+collection "1..1"--"0..*" item
+collection "0..*"--"1..1" template
+
+template "1..1"--"0..*" property
+template "0..1"--"0..1" template : "Template parent"
+template "0..*"--"1..1" user
+
+item "1..1"--"0..*" item_property
+item_property "0..*"--"1..1" property
+
+@enduml
