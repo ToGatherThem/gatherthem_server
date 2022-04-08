@@ -119,7 +119,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-        '204':
+        '404':
           description: La collection n'a pas été modifié parce qu'elle n'a pas été trouvé
     delete:
       summary: Supprimer une collection
@@ -134,7 +134,7 @@ paths:
       responses:
         '200':
           description: La collection a été supprimée
-        '204':
+        '404':
           description: La collection n'a pas été trouvée
   /collections/{id}/items:
     get:
@@ -156,6 +156,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Item'
+        '404':
+          description: La collection n'a pas été trouvée
+
     post:
       summary: Ajout d'un item à une collection
       tags:
@@ -178,6 +181,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Item'
+        '404':
+          description: La collection n'a pas été trouvée
 
 tags:
   - name: Utilisateur
