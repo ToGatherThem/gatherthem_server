@@ -2,9 +2,11 @@ package fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.service;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.infrastructure.repository.CollectionRepository;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CollectionService {
@@ -27,7 +29,7 @@ public class CollectionService {
 //        return collectionRepository.patch(id, coll);
 //    }
 //
-//    public void deleteById(String id) throws NotFoundException {
-//        collectionRepository.delete(id);
-//    }
+    public void deleteById(UUID id) throws NotFoundException {
+        collectionRepository.deleteCollection(id);
+    }
 }

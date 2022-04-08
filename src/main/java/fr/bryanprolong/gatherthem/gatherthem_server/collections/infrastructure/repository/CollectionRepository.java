@@ -6,6 +6,7 @@ import fr.bryanprolong.gatherthem.gatherthem_server.commons.dao.CollectionDao;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,5 +19,9 @@ public class CollectionRepository {
 
     public List<CollectionModel> getCollections() {
         return collectionDao.findAll().stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
+    }
+
+    public void deleteCollection(UUID id) {
+        collectionDao.deleteById(id);
     }
 }
