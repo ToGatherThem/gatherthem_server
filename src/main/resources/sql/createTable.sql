@@ -78,7 +78,7 @@ create table item_property
 );
 
 insert into user(user_id, username, password, email)
-values ('a3387036-4946-11ec-81d3-0242ac130003', 'Administrateur',
+values ('a3387036-4946-11ec-81d3-0242ac130003', 'Admin',
         '$2a$10$dcjsEDgBzJ8GHntLWbELh.ct8viol8oMFb6uyHysL8H8dr173Lx3K',
         'admin@gatherthem.fr'); /* Mot de passe : exemple */
 
