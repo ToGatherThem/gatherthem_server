@@ -1,20 +1,11 @@
-package fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.models;
+package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dto;
 
-public class CollectionModel {
+public class CollectionInformationsDto {
 
-    private String uuid;
     private String type;
     private String name;
     private String description;
-    private long creation_date;
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
+    private long creationDate;
 
     public String getType() {
         return type;
@@ -40,11 +31,11 @@ public class CollectionModel {
         this.description = description;
     }
 
-    public long getCreation_date() {
-        return creation_date;
+    public long getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreation_date(long creation_date) {
-        this.creation_date = creation_date;
+    public void setCreationDate(long creationDate) {
+        this.creationDate = creationDate;
     }
 }

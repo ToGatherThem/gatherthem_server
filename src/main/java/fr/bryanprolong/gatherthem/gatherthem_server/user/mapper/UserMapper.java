@@ -1,6 +1,6 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.mapper;
 
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie.UserEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exposition.dto.UserDto;

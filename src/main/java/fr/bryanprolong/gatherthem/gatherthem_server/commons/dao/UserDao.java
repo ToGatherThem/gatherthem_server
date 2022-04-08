@@ -1,15 +1,12 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.commons.dao;
 
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/user")

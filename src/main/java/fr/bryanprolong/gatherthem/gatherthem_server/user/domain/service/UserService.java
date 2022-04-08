@@ -1,8 +1,5 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.domain.service;
 
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.dao.UserDao;
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.AuthorityEntity;
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.Authority;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
@@ -10,7 +7,6 @@ import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserRegist
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.EmailAlreadyExistException;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.infrastructure.repository.UserRepository;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

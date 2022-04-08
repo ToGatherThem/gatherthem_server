@@ -1,7 +1,6 @@
-package fr.bryanprolong.gatherthem.gatherthem_server.commons.entity;
+package fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "authority")

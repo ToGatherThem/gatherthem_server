@@ -31,8 +31,8 @@ create table template
     visibility      varchar(10)      not null,
     parent_id       UUID,
     foreign key (parent_id) references template (id),
-    user_id         UUID             not null,
-    foreign key (user_id) references user (user_id)
+    owner_id         UUID             not null,
+    foreign key (owner_id) references user (user_id)
 );
 
 create table property
@@ -51,8 +51,8 @@ create table collection
     description   varchar(1000),
     image         varchar(1000),
     creation_date DATE default CURRENT_DATE,
-    user_id       UUID             not null,
-    foreign key (user_id) references user (user_id),
+    owner_id       UUID             not null,
+    foreign key (owner_id) references user (user_id),
     template_id   UUID             not null,
     foreign key (template_id) references template (id)
 );
@@ -90,11 +90,11 @@ insert into user_authority(user_id, authority_code)
 values ('a3387036-4946-11ec-81d3-0242ac130003', 'ADMIN'),
        ('a3387036-4946-11ec-81d3-0242ac130003', 'PREMIUM');
 
-insert into template(id, name, description, item_label_name, visibility, user_id)
+insert into template(id, name, description, item_label_name, visibility, owner_id)
 values ('cec5f7b6-cfe3-4368-978c-22bb3010bf1f', 'Livre', '', 'Titre', 'PUBLIC', 'a3387036-4946-11ec-81d3-0242ac130003'),
        ('b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'Film', '', 'Titre', 'PUBLIC', 'a3387036-4946-11ec-81d3-0242ac130003');
 
-insert into template(id, name, description, item_label_name, visibility, parent_id, user_id)
+insert into template(id, name, description, item_label_name, visibility, parent_id, owner_id)
 values ('804a1231-e398-452d-8d0c-ce660383a8d3', 'DVD', '', 'Titre', 'PUBLIC',
         'b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'a3387036-4946-11ec-81d3-0242ac130003'),
        ('2b3baadf-baa4-4de6-b386-f85bdc1e0c3d', 'Blu-ray', '', 'Titre', 'PUBLIC',
@@ -117,7 +117,7 @@ values
     ('04257a99-b1c8-4ad5-9cca-f05afe0f7972', 'Durée', 'TIME', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
     ('a719204d-46bd-43e7-a34b-12f59e42e65c', 'Langue', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35');
 
-insert into collection(id, name, description, image, user_id, template_id)
+insert into collection(id, name, description, image, owner_id, template_id)
 values ('014edff9-8a67-4ce2-9f68-88b3e94f7171', 'Mes livres de fantasy', 'Et même que ils sont magiques mes livres', '',
         'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
        ('c79343b8-835e-4a92-98ae-3de3593912b7', 'Mes livres en plastique', 'Ils flottent', '', 'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f');

@@ -1,18 +1,23 @@
-package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dtos;
+package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dto;
 
-public class CollectionInformationsDto {
+import java.util.Date;
+import java.util.UUID;
 
-    private String type;
+public class CollectionDto {
+    private UUID id;
     private String name;
     private String description;
-    private long creationDate;
+    private Date creationDate;
 
-    public String getType() {
-        return type;
+    public CollectionDto() {
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,11 +36,11 @@ public class CollectionInformationsDto {
         this.description = description;
     }
 
-    public long getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(long creationDate) {
+    public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 }

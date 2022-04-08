@@ -1,7 +1,7 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.infrastructure.repository;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.dao.UserDao;
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie.UserEntity;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserMapper;
 import org.springframework.stereotype.Component;
