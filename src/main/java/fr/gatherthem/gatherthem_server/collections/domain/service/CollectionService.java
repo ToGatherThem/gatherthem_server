@@ -1,6 +1,7 @@
 package fr.gatherthem.gatherthem_server.collections.domain.service;
 
 import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
+import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.collections.infrastructure.repository.CollectionRepository;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.user.domain.AppUser;
@@ -46,5 +47,14 @@ public class CollectionService {
         AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         coll.setOwner(UserMapper.mapAppUserToUserModel(user));
         return collectionRepository.save(coll);
+    }
+
+    public ItemModel saveItem(UUID collectionId, ItemModel item) throws NotFoundException {
+        Optional<CollectionModel> optionalCollectionModel = collectionRepository.findById(collectionId);
+        if(optionalCollectionModel.isPresent()){
+            item.setCollection(optionalCollectionModel.get());
+            return collectionRepository.saveItem(item);
+        }
+        else throw new NotFoundException();
     }
 }
