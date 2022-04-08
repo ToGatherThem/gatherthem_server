@@ -1,4 +1,4 @@
-package fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie;
+package fr.bryanprolong.gatherthem.gatherthem_server.commons.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;

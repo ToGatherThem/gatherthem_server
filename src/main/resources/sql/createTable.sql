@@ -53,7 +53,7 @@ create table collection
     creation_date DATE default CURRENT_DATE,
     owner_id       UUID             not null,
     foreign key (owner_id) references user (user_id),
-    template_id   UUID             not null,
+    template_id   UUID             /*not null TODO add template*/,
     foreign key (template_id) references template (id)
 );
 

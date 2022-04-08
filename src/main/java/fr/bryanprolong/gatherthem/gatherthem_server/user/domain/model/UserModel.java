@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class User {
+public class UserModel {
     private UUID id;
     private String username;
     private String password;
     private String email;
     private List<Authority> authorities;
 
-    public User() {
+    public UserModel() {
     }
 
     public UUID getId() {

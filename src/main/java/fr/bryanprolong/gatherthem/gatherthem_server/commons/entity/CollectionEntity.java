@@ -1,10 +1,11 @@
-package fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie;
+package fr.bryanprolong.gatherthem.gatherthem_server.commons.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -62,7 +63,7 @@ public class CollectionEntity {
     }
 
     public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+        this.creationDate = Objects.requireNonNullElseGet(creationDate, Date::new);
     }
 
     public UserEntity getOwner() {
