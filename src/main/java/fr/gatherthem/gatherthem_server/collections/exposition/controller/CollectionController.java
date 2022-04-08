@@ -5,6 +5,7 @@ import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.collections.domain.service.CollectionService;
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionDto;
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationAndUpdateDto;
+import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemCreationAndUpdateDto;
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemDto;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
@@ -74,9 +75,9 @@ public class CollectionController {
     }
 
     @PostMapping("/{id}/items")
-    public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemDto newItem){
+    public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationAndUpdateDto newItem){
         try {
-            ItemModel item = ItemMapper.mapDtoToModel(newItem);
+            ItemModel item = ItemMapper.mapCreationAndUpdateDtoToModel(newItem);
             ItemModel res = collectionService.saveItem(collectionId, item);
             return ResponseEntity.created(URI.create("/collections/" + collectionId + "/items/" + res.getId())).body(ItemMapper.mapModelToDto(res));
         } catch (NotFoundException e) {
