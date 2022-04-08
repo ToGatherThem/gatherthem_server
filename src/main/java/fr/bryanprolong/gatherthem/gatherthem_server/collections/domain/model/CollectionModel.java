@@ -54,4 +54,6 @@ public class CollectionModel {
     public void setOwner(UserModel owner) {
         this.owner = owner;
     }
+
+
 }

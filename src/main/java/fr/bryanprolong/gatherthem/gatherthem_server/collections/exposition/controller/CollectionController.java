@@ -43,21 +43,21 @@ public class CollectionController {
             return ResponseEntity.internalServerError().build();
         }
     }
-//
-//    @PatchMapping
-//    public ResponseEntity<CollectionDtoMongo> changeCollection(@RequestParam("id") String id, @RequestBody CollectionInformationsDto newColl){
-//        try{
-//            CollectionModelMongo coll = Mapper.mapFromInfosDtoToModel(newColl);
-//            CollectionModelMongo res = collectionsService.patch(id, coll);
-//            return ResponseEntity.ok(Mapper.mapFromModelToDto(res));
-//        }catch (NotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        catch(Exception e){
-//            return  ResponseEntity.internalServerError().build();
-//        }
-//    }
-//
+
+    @PutMapping
+    public ResponseEntity<CollectionDto> changeCollection(@RequestParam("id") UUID id, @RequestBody CollectionCreationAndUpdateDto newColl){
+        try{
+            CollectionModel coll = CollectionMapper.mapInfosDtoToModel(newColl);
+            CollectionModel res = collectionService.update(id, coll);
+            return ResponseEntity.ok(CollectionMapper.mapModelToDto(res));
+        }catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        catch(Exception e){
+            return  ResponseEntity.internalServerError().build();
+        }
+    }
+
     @DeleteMapping
     public ResponseEntity<Void> deleteCollection(@RequestParam("id") UUID id){
         try{
