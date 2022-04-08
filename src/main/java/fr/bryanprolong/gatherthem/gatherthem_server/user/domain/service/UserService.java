@@ -2,7 +2,7 @@ package fr.bryanprolong.gatherthem.gatherthem_server.user.domain.service;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.Authority;
-import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserRegister;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.EmailAlreadyExistException;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
@@ -27,23 +27,23 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findByUsername(username);
+        Optional<UserModel> optionalUser = userRepository.findByUsername(username);
         if(optionalUser.isPresent()) {
-            User user = optionalUser.get();
+            UserModel userModel = optionalUser.get();
 
             String stringAuthorities = String.join(
                     ",",
-                    user.getAuthorities().stream()
+                    userModel.getAuthorities().stream()
                             .map(Authority::getCode)
                             .toList()
             );
 
             return new AppUser(
-                    user.getId(),
-                    user.getEmail(),
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getAuthorities()
+                    userModel.getId(),
+                    userModel.getEmail(),
+                    userModel.getUsername(),
+                    userModel.getPassword(),
+                    userModel.getAuthorities()
             );
         } else throw new UsernameNotFoundException("");
     }

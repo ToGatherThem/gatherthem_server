@@ -1,8 +1,8 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.user.infrastructure.repository;
 
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.dao.UserDao;
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie.UserEntity;
-import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.User;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.entity.UserEntity;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
@@ -15,11 +15,11 @@ public class UserRepository {
         this.userDao = userDao;
     }
 
-    public Optional<User> findByUsername(String username) {
+    public Optional<UserModel> findByUsername(String username) {
         return userDao.findByUsername(username).map(UserMapper::mapEntityToModel);
     }
 
-    public Optional<User> findByEmail(String email) {
+    public Optional<UserModel> findByEmail(String email) {
         return userDao.findByEmail(email).map(UserMapper::mapEntityToModel);
     }
 

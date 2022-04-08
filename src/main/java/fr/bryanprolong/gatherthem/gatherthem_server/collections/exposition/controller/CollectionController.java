@@ -1,12 +1,15 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.controller;
 
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.service.CollectionService;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dto.CollectionDto;
+import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationAndUpdateDto;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,16 +33,16 @@ public class CollectionController {
         }
     }
 
-//    @PostMapping
-//    public ResponseEntity<CollectionDtoMongo> addCollection(@RequestBody CollectionInformationsDto newColl){
-//        try{
-//            CollectionModelMongo coll = Mapper.mapFromInfosDtoToModel(newColl);
-//            CollectionModelMongo res = collectionsService.save(coll);
-//            return ResponseEntity.created(URI.create("/collections/" + res.getUuid())).body(Mapper.mapFromModelToDto(res));
-//        }catch (Exception e){
-//            return ResponseEntity.internalServerError().build();
-//        }
-//    }
+    @PostMapping
+    public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionCreationAndUpdateDto newColl){
+        try{
+            CollectionModel coll = CollectionMapper.mapInfosDtoToModel(newColl);
+            CollectionModel res = collectionService.save(coll);
+            return ResponseEntity.created(URI.create("/collections/" + res.getId())).body(CollectionMapper.mapModelToDto(res));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 //
 //    @PatchMapping
 //    public ResponseEntity<CollectionDtoMongo> changeCollection(@RequestParam("id") String id, @RequestBody CollectionInformationsDto newColl){

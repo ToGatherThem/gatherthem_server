@@ -1,6 +1,6 @@
 package fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.model;
 
-import fr.bryanprolong.gatherthem.gatherthem_server.commons.entitie.UserEntity;
+import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserModel;
 
 import java.util.Date;
 import java.util.UUID;
@@ -10,7 +10,7 @@ public class CollectionModel {
     private String name;
     private String description;
     private Date creationDate;
-    private UserEntity owner;
+    private UserModel owner;
 
     public CollectionModel() {
     }
@@ -47,11 +47,11 @@ public class CollectionModel {
         this.creationDate = creationDate;
     }
 
-    public UserEntity getOwner() {
+    public UserModel getOwner() {
         return owner;
     }
 
-    public void setOwner(UserEntity owner) {
+    public void setOwner(UserModel owner) {
         this.owner = owner;
     }
 }
