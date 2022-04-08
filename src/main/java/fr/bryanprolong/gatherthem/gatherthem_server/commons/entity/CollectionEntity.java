@@ -24,7 +24,7 @@ public class CollectionEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "creation_date", columnDefinition = "date default CURRENT_DATE")
+    @Column(name = "creation_date")
     private Date creationDate;
 
     @ManyToOne
