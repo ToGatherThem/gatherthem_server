@@ -62,7 +62,7 @@ create table item
     id             UUID primary key not null,
     label          varchar(50)      not null,
     creation_date  DATE default CURRENT_DATE,
-    obtention_date DATE             not null,
+    obtention_date DATE,
     collection_id  UUID             not null,
     foreign key (collection_id) references collection (id)
 );
