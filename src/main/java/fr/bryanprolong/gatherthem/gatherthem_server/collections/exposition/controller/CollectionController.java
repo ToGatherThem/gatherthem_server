@@ -3,10 +3,12 @@ package fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.cont
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.service.CollectionService;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.exposition.dto.CollectionDto;
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
+import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/collections")
@@ -53,15 +55,15 @@ public class CollectionController {
 //        }
 //    }
 //
-//    @DeleteMapping
-//    public ResponseEntity<Void> deleteCollection(@RequestParam("id") String id){
-//        try{
-//            collectionsService.deleteById(id);
-//            return ResponseEntity.noContent().build();
-//        }catch (NotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        }catch(Exception e){
-//            return  ResponseEntity.internalServerError().build();
-//        }
-//    }
+    @DeleteMapping
+    public ResponseEntity<Void> deleteCollection(@RequestParam("id") UUID id){
+        try{
+            collectionService.deleteById(id);
+            return ResponseEntity.ok().build();
+        }catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }catch(Exception e){
+            return  ResponseEntity.internalServerError().build();
+        }
+    }
 }
