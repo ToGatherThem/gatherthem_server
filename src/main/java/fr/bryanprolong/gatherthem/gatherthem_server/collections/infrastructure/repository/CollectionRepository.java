@@ -6,6 +6,7 @@ import fr.bryanprolong.gatherthem.gatherthem_server.commons.dao.CollectionDao;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,5 +28,9 @@ public class CollectionRepository {
 
     public CollectionModel save(CollectionModel coll) {
         return CollectionMapper.mapEntityToModel(collectionDao.save(CollectionMapper.mapModelToEntity(coll)));
+    }
+
+    public Optional<CollectionModel> findById(UUID id) {
+        return collectionDao.findById(id).map(CollectionMapper::mapEntityToModel);
     }
 }

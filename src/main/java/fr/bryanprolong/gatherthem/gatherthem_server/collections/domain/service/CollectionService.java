@@ -4,12 +4,12 @@ import fr.bryanprolong.gatherthem.gatherthem_server.collections.domain.model.Col
 import fr.bryanprolong.gatherthem.gatherthem_server.collections.infrastructure.repository.CollectionRepository;
 import fr.bryanprolong.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.AppUser;
-import fr.bryanprolong.gatherthem.gatherthem_server.user.domain.model.UserModel;
 import fr.bryanprolong.gatherthem.gatherthem_server.user.mapper.UserMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,10 +26,18 @@ public class CollectionService {
     }
 
 
-//    public CollectionModelMongo patch(String id, CollectionModelMongo coll) throws NotFoundException {
-//        return collectionRepository.patch(id, coll);
-//    }
-//
+    public CollectionModel update(UUID id, CollectionModel coll) throws NotFoundException {
+        Optional<CollectionModel> optionalCollectionModel = collectionRepository.findById(id);
+        if(optionalCollectionModel.isPresent()){
+            CollectionModel collectionModel = optionalCollectionModel.get();
+            collectionModel.setName(coll.getName());
+            collectionModel.setDescription(coll.getDescription());
+            return collectionRepository.save(collectionModel);
+        }
+        else throw new NotFoundException();
+
+    }
+
     public void deleteById(UUID id) throws NotFoundException {
         collectionRepository.deleteCollection(id);
     }
