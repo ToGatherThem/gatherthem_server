@@ -31,12 +31,16 @@ public class CollectionRepository {
         collectionDao.deleteById(id);
     }
 
-    public CollectionModel save(CollectionModel coll) {
+    public CollectionModel saveCollection(CollectionModel coll) {
         return CollectionMapper.mapEntityToModel(collectionDao.save(CollectionMapper.mapModelToEntity(coll)));
     }
 
-    public Optional<CollectionModel> findById(UUID id) {
+    public Optional<CollectionModel> findCollectionById(UUID id) {
         return collectionDao.findById(id).map(CollectionMapper::mapEntityToModel);
+    }
+
+    public List<ItemModel> getItemsByCollectionId(UUID id) {
+        return itemDao.findByCollectionId(id).stream().map(ItemMapper::mapEntityToModel).collect(Collectors.toList());
     }
 
     public ItemModel saveItem(ItemModel item) {
