@@ -8,7 +8,6 @@ import fr.gatherthem.gatherthem_server.commons.dao.CollectionDao;
 import fr.gatherthem.gatherthem_server.commons.dao.ItemDao;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,5 +41,13 @@ public class CollectionRepository {
 
     public List<ItemModel> getItemsByCollectionId(UUID id) {
         return itemDao.findByCollectionId(id).stream().map(ItemMapper::mapEntityToModel).collect(Collectors.toList());
+    }
+
+    public Optional<CollectionModel> findById(UUID id) {
+        return collectionDao.findById(id).map(CollectionMapper::mapEntityToModel);
+    }
+
+    public ItemModel saveItem(ItemModel item) {
+        return ItemMapper.mapEntityToModel(itemDao.save(ItemMapper.mapModelToEntity(item)));
     }
 }

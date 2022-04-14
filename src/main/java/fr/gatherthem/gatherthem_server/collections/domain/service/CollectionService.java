@@ -55,4 +55,13 @@ public class CollectionService {
             return collectionRepository.getItemsByCollectionId(id);
         } else throw new NotFoundException();
     }
+
+    public ItemModel saveItem(UUID collectionId, ItemModel item) throws NotFoundException {
+        Optional<CollectionModel> optionalCollectionModel = collectionRepository.findById(collectionId);
+        if(optionalCollectionModel.isPresent()){
+            item.setCollection(optionalCollectionModel.get());
+            return collectionRepository.saveItem(item);
+        }
+        else throw new NotFoundException();
+    }
 }
