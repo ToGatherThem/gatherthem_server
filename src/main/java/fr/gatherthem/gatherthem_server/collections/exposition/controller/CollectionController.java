@@ -9,7 +9,9 @@ import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemCreationAn
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemDto;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
+import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -94,7 +96,12 @@ public class CollectionController {
             return ResponseEntity.ok(items);
         }catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
-        }catch(Exception e){
+        } catch (Forbidden e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e){
+            e.printStackTrace();
             return  ResponseEntity.internalServerError().build();
         }
     }
