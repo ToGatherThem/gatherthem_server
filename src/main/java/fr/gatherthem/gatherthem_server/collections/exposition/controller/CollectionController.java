@@ -80,6 +80,7 @@ public class CollectionController {
     @PostMapping("/{id}/items")
     public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationAndUpdateDto newItem){
         try {
+            if(newItem.getLabel() == null || newItem.getLabel().isEmpty() || newItem.getLabel().length() > 50 || newItem.getObtentionDate() == null) return ResponseEntity.badRequest().build();
             ItemModel item = ItemMapper.mapCreationAndUpdateDtoToModel(newItem);
             ItemModel res = collectionService.saveItem(collectionId, item);
             return ResponseEntity.created(URI.create("/collections/" + collectionId + "/items/" + res.getId())).body(ItemMapper.mapModelToDto(res));
