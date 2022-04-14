@@ -23,7 +23,8 @@ public class CollectionService {
     }
 
     public List<CollectionModel> getCollections(){
-        return collectionRepository.getCollections();
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return collectionRepository.getCollectionByOwnerId(user.getId());
     }
 
 

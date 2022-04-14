@@ -8,9 +8,7 @@ import fr.gatherthem.gatherthem_server.commons.dao.CollectionDao;
 import fr.gatherthem.gatherthem_server.commons.dao.ItemDao;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -23,8 +21,8 @@ public class CollectionRepository {
         this.itemDao = itemDao;
     }
 
-    public List<CollectionModel> getCollections() {
-        return collectionDao.findAll().stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
+    public List<CollectionModel> getCollectionByOwnerId(UUID id) {
+        return collectionDao.findAllByUserId(id).stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
     }
 
     public void deleteCollection(UUID id) {
