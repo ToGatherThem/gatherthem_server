@@ -28,9 +28,7 @@ public class CollectionRepository {
         return collectionDao.findAll().stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
     }
 
-    @Transactional
     public void deleteCollection(UUID id) {
-        itemDao.deleteAllByCollectionId(id);
         collectionDao.deleteById(id);
     }
 

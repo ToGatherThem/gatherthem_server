@@ -64,7 +64,7 @@ create table item
     creation_date  DATE default CURRENT_DATE,
     obtention_date DATE             not null,
     collection_id  UUID             not null,
-    foreign key (collection_id) references collection (id)
+    foreign key (collection_id) references collection (id) on delete cascade
 );
 
 create table item_property
