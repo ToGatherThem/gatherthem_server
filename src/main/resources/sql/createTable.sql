@@ -50,7 +50,7 @@ create table collection
     name          varchar(50)      not null,
     description   varchar(1000),
     image         varchar(1000),
-    creation_date DATE default CURRENT_DATE,
+    creation_date DATETIME default CURRENT_TIME,
     owner_id       UUID             not null,
     foreign key (owner_id) references user (user_id),
     template_id   UUID             /*not null TODO add template*/,
@@ -61,7 +61,7 @@ create table item
 (
     id             UUID primary key not null,
     label          varchar(50)      not null,
-    creation_date  DATE default CURRENT_DATE,
+    creation_date  DATETIME default CURRENT_TIME,
     obtention_date DATE,
     collection_id  UUID             not null,
     foreign key (collection_id) references collection (id) on delete cascade
