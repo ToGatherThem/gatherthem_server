@@ -43,10 +43,6 @@ public class CollectionRepository {
         return itemDao.findByCollectionId(id).stream().map(ItemMapper::mapEntityToModel).collect(Collectors.toList());
     }
 
-    public Optional<CollectionModel> findById(UUID id) {
-        return collectionDao.findById(id).map(CollectionMapper::mapEntityToModel);
-    }
-
     public ItemModel saveItem(ItemModel item) {
         return ItemMapper.mapEntityToModel(itemDao.save(ItemMapper.mapModelToEntity(item)));
     }

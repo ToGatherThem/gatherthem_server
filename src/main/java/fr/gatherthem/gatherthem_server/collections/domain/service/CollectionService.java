@@ -57,7 +57,7 @@ public class CollectionService {
     }
 
     public ItemModel saveItem(UUID collectionId, ItemModel item) throws NotFoundException {
-        Optional<CollectionModel> optionalCollectionModel = collectionRepository.findById(collectionId);
+        Optional<CollectionModel> optionalCollectionModel = collectionRepository.findCollectionById(collectionId);
         if(optionalCollectionModel.isPresent()){
             item.setCollection(optionalCollectionModel.get());
             return collectionRepository.saveItem(item);
