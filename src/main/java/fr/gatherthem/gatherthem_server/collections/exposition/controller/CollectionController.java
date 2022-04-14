@@ -70,6 +70,7 @@ public class CollectionController {
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

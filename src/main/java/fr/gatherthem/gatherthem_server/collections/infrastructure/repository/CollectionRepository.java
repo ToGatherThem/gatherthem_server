@@ -28,7 +28,9 @@ public class CollectionRepository {
         return collectionDao.findAll().stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
     }
 
+    @Transactional
     public void deleteCollection(UUID id) {
+        itemDao.deleteAllByCollectionId(id);
         collectionDao.deleteById(id);
     }
 
@@ -36,9 +38,7 @@ public class CollectionRepository {
         return CollectionMapper.mapEntityToModel(collectionDao.save(CollectionMapper.mapModelToEntity(coll)));
     }
 
-    @Transactional
     public Optional<CollectionModel> findById(UUID id) {
-        itemDao.deleteAllByCollectionId(id);
         return collectionDao.findById(id).map(CollectionMapper::mapEntityToModel);
     }
 

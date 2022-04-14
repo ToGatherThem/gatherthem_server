@@ -74,7 +74,7 @@ create table item_property
     property_id UUID             not null,
     foreign key (property_id) references property (id),
     item_id     UUID             not null,
-    foreign key (item_id) references item (id)
+    foreign key (item_id) references item (id) on delete cascade
 );
 
 insert into user(user_id, username, password, email)
