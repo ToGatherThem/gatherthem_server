@@ -184,11 +184,28 @@ paths:
         '404':
           description: La collection n'a pas été trouvée
 
+  /templates:
+    get:
+      summary: Consulter les templates accessibles à l'utilisateur connecté
+      tags:
+        - Template
+      responses:
+        '200':
+          description: Liste des templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
+
 tags:
   - name: Utilisateur
     description: Gestion des utilisateurs
   - name: Collection
     description: Gestion des collections
+  - name: Template
+    description: Gestion des templates
 
 components:
   schemas:
@@ -326,3 +343,36 @@ components:
           type: string
         type:
           type: string
+    Template:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        itemLabelName:
+          type: string
+        visibility:
+          type: string
+        parent:
+          $ref: '#/components/schemas/Template'
+        owner:
+          $ref: '#/components/schemas/TemplateOwner'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    TemplateOwner:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
