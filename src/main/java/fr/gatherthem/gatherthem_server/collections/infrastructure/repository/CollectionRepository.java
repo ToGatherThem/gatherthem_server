@@ -29,7 +29,6 @@ public class CollectionRepository {
         collectionDao.deleteById(id);
     }
 
-    public void deleteItem(UUID id){ itemDao.deleteById(id);}
 
     public CollectionModel saveCollection(CollectionModel coll) {
         return CollectionMapper.mapEntityToModel(collectionDao.save(CollectionMapper.mapModelToEntity(coll)));
