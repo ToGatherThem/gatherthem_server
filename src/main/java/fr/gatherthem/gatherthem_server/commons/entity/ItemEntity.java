@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -29,6 +30,9 @@ public class ItemEntity {
     @ManyToOne
     @JoinColumn(name = "collection_id")
     private CollectionEntity collection;
+
+    @OneToMany(targetEntity = ItemPropertyEntity.class, mappedBy = "item", cascade = CascadeType.ALL)
+    private List<ItemPropertyEntity> properties;
 
     public ItemEntity() {
     }
@@ -71,5 +75,13 @@ public class ItemEntity {
 
     public void setCollection(CollectionEntity collection) {
         this.collection = collection;
+    }
+
+    public List<ItemPropertyEntity> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<ItemPropertyEntity> properties) {
+        this.properties = properties;
     }
 }
