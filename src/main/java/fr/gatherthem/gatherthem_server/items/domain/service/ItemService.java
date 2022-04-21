@@ -28,5 +28,9 @@ public class ItemService {
         else throw new NotFoundException();
     }
 
+    public void deleteItemById(UUID id) throws NotFoundException{
+        itemRepository.deleteItem(id);
+    }
+
 }
 

@@ -26,4 +26,7 @@ public class ItemRepository {
         ItemEntity itemEntity = itemDao.save(ItemMapper.mapModelToEntity(item));
         return ItemMapper.mapEntityToModel(itemEntity);
     }
+
+    public void deleteItem(UUID id){ itemDao.deleteById(id);}
+
 }

@@ -36,4 +36,18 @@ public class ItemController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+
+    @DeleteMapping("/{id}/items")
+    public ResponseEntity<Void> deleteItem(@PathVariable("id")UUID id) {
+        try {
+            itemService.deleteItemById(id);
+            return ResponseEntity.ok().build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
