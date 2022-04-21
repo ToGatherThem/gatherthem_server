@@ -31,6 +31,10 @@ public class CollectionEntity {
     @JoinColumn(name = "owner_id")
     private UserEntity owner;
 
+    @ManyToOne
+    @JoinColumn(name = "template_id")
+    private TemplateEntity template;
+
     public CollectionEntity() {
     }
 
@@ -72,5 +76,13 @@ public class CollectionEntity {
 
     public void setOwner(UserEntity owner) {
         this.owner = owner;
+    }
+
+    public TemplateEntity getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(TemplateEntity template) {
+        this.template = template;
     }
 }

@@ -8,6 +8,7 @@ public class CollectionDto {
     private String name;
     private String description;
     private Date creationDate;
+    private TemplateDto template;
 
     public CollectionDto() {
     }
@@ -42,5 +43,13 @@ public class CollectionDto {
 
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public TemplateDto getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(TemplateDto template) {
+        this.template = template;
     }
 }

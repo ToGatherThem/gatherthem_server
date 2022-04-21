@@ -14,6 +14,7 @@ public class CollectionMapper {
         collectionModel.setDescription(collectionEntity.getDescription());
         collectionModel.setCreationDate(collectionEntity.getCreationDate());
         collectionModel.setOwner(UserMapper.mapEntityToModel(collectionEntity.getOwner()));
+        collectionModel.setTemplate(TemplateMapper.mapEntityToModel(collectionEntity.getTemplate()));
         return collectionModel;
     }
 
@@ -33,6 +34,7 @@ public class CollectionMapper {
         collectionDto.setName(collectionModel.getName());
         collectionDto.setDescription(collectionModel.getDescription());
         collectionDto.setCreationDate(collectionModel.getCreationDate());
+        collectionDto.setTemplate(TemplateMapper.mapModelToDto(collectionModel.getTemplate()));
         return collectionDto;
     }
 

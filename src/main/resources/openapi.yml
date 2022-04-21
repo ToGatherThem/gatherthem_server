@@ -89,7 +89,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollectionCreationAndUpdate'
+              $ref: '#/components/schemas/CollectionCreation'
       responses:
         '201':
           description: La collection a été créée
@@ -106,12 +106,13 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollectionCreationAndUpdate'
+              $ref: '#/components/schemas/CollectionUpdate'
       responses:
         '200':
           description: La collection a été modifiée
@@ -130,6 +131,7 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       responses:
         '200':
@@ -146,6 +148,7 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       responses:
         '200':
@@ -168,6 +171,7 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       requestBody:
         content:
@@ -263,18 +267,31 @@ components:
         creationDate:
           type: string
           format: date-time
-    CollectionCreationAndUpdate:
+        template:
+          $ref: '#/components/schemas/Template'
+    CollectionUpdate:
       type: object
       properties:
         name:
           type: string
         description:
           type: string
+    CollectionCreation:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        template_id:
+          type: string
+          format: uuid
     Item:
       type: object
       properties:
         id:
           type: string
+          format: uuid
         label:
           type: string
         creationDate:
