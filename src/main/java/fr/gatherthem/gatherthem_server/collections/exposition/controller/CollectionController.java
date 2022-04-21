@@ -77,8 +77,8 @@ public class CollectionController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteItem(@RequestParam("id")UUID id) {
+    @DeleteMapping("/{id}/items")
+    public ResponseEntity<Void> deleteItem(@PathVariable("id")UUID id) {
         try {
             collectionService.deleteItemById(id);
             return ResponseEntity.ok().build();
