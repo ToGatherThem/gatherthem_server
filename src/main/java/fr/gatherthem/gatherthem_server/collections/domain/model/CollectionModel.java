@@ -1,7 +1,5 @@
 package fr.gatherthem.gatherthem_server.collections.domain.model;
 
-import fr.gatherthem.gatherthem_server.user.domain.model.UserModel;
-
 import java.util.Date;
 import java.util.UUID;
 

@@ -3,6 +3,7 @@ package fr.gatherthem.gatherthem_server.collections.mapper;
 import fr.gatherthem.gatherthem_server.collections.domain.model.UserModel;
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.UserDto;
 import fr.gatherthem.gatherthem_server.commons.entity.UserEntity;
+import fr.gatherthem.gatherthem_server.user.domain.AppUser;
 
 public class UserMapper {
     public static UserModel mapEntityToModel(UserEntity userEntity) {
@@ -33,5 +34,15 @@ public class UserMapper {
         userDto.setEmail(userModel.getEmail());
 
         return userDto;
+    }
+
+    public static UserModel mapAppUserToUserModel(AppUser appUser) {
+        UserModel userModel = new UserModel();
+
+        userModel.setId(appUser.getId());
+        userModel.setUsername(appUser.getUsername());
+        userModel.setEmail(appUser.getEmail());
+
+        return userModel;
     }
 }

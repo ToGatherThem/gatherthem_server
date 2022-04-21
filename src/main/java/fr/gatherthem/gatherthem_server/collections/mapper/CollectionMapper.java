@@ -6,7 +6,6 @@ import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionUpda
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationDto;
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionDto;
 import fr.gatherthem.gatherthem_server.commons.entity.CollectionEntity;
-import fr.gatherthem.gatherthem_server.user.mapper.UserMapper;
 
 public class CollectionMapper {
     public static CollectionModel mapEntityToModel(CollectionEntity collectionEntity) {

@@ -4,12 +4,11 @@ import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionCreati
 import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
 import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.collections.domain.model.TemplateModel;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationDto;
 import fr.gatherthem.gatherthem_server.collections.infrastructure.repository.CollectionRepository;
 import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.user.domain.AppUser;
-import fr.gatherthem.gatherthem_server.user.mapper.UserMapper;
+import fr.gatherthem.gatherthem_server.collections.mapper.UserMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
