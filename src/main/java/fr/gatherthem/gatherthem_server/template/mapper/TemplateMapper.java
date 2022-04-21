@@ -15,6 +15,7 @@ public class TemplateMapper {
         templateModel.setVisibility(templateEntity.getVisibility());
         if(templateEntity.getParent() != null) templateModel.setParent(TemplateMapper.mapEntityToModel(templateEntity.getParent()));
         templateModel.setOwner(UserMapper.mapEntityToModel(templateEntity.getOwner()));
+        templateModel.setProperties(templateEntity.getProperties().stream().map(PropertyMapper::mapEntityToModel).toList());
 
         return templateModel;
     }
@@ -29,6 +30,7 @@ public class TemplateMapper {
         templateDto.setVisibility(templateModel.getVisibility());
         if(templateModel.getParent() != null) templateDto.setParent(TemplateMapper.mapModelToDto(templateModel.getParent()));
         templateDto.setOwner(UserMapper.mapModelToDto(templateModel.getOwner()));
+        templateDto.setProperties(templateModel.getProperties().stream().map(PropertyMapper::mapModelToDto).toList());
 
         return templateDto;
     }

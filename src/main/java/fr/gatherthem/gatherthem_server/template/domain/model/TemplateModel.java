@@ -1,5 +1,6 @@
 package fr.gatherthem.gatherthem_server.template.domain.model;
 
+import java.util.List;
 import java.util.UUID;
 
 public class TemplateModel {
@@ -16,6 +17,8 @@ public class TemplateModel {
     private TemplateModel parent;
 
     private UserModel owner;
+
+    private List<PropertyModel> properties;
 
     public TemplateModel() {
     }
@@ -74,5 +77,13 @@ public class TemplateModel {
 
     public void setOwner(UserModel owner) {
         this.owner = owner;
+    }
+
+    public List<PropertyModel> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<PropertyModel> properties) {
+        this.properties = properties;
     }
 }

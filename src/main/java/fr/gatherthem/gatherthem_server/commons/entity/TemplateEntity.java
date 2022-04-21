@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -34,6 +35,9 @@ public class TemplateEntity {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private UserEntity owner;
+
+    @OneToMany(targetEntity = PropertyEntity.class, mappedBy = "template", cascade = CascadeType.ALL)
+    private List<PropertyEntity> properties;
 
     public TemplateEntity() {
     }
@@ -92,5 +96,13 @@ public class TemplateEntity {
 
     public void setOwner(UserEntity owner) {
         this.owner = owner;
+    }
+
+    public List<PropertyEntity> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<PropertyEntity> properties) {
+        this.properties = properties;
     }
 }

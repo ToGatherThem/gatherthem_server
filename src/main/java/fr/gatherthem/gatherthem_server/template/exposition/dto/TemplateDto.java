@@ -1,5 +1,6 @@
 package fr.gatherthem.gatherthem_server.template.exposition.dto;
 
+import java.util.List;
 import java.util.UUID;
 
 public class TemplateDto {
@@ -16,6 +17,8 @@ public class TemplateDto {
     private TemplateDto parent;
 
     private UserDto owner;
+
+    private List<PropertyDto> properties;
 
     public TemplateDto() {
     }
@@ -74,5 +77,13 @@ public class TemplateDto {
 
     public void setOwner(UserDto owner) {
         this.owner = owner;
+    }
+
+    public List<PropertyDto> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<PropertyDto> properties) {
+        this.properties = properties;
     }
 }
