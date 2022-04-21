@@ -1,7 +1,9 @@
 package fr.gatherthem.gatherthem_server.collections.mapper;
 
+import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionCreationModel;
 import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationAndUpdateDto;
+import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionUpdateDto;
+import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationDto;
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionDto;
 import fr.gatherthem.gatherthem_server.commons.entity.CollectionEntity;
 import fr.gatherthem.gatherthem_server.user.mapper.UserMapper;
@@ -25,6 +27,7 @@ public class CollectionMapper {
         collectionEntity.setDescription(collectionModel.getDescription());
         collectionEntity.setCreationDate(collectionModel.getCreationDate());
         collectionEntity.setOwner(UserMapper.mapModelToEntity(collectionModel.getOwner()));
+        collectionEntity.setTemplate(TemplateMapper.mapModelToEntity(collectionModel.getTemplate()));
         return collectionEntity;
     }
 
@@ -38,10 +41,18 @@ public class CollectionMapper {
         return collectionDto;
     }
 
-    public  static CollectionModel mapInfosDtoToModel(CollectionCreationAndUpdateDto collectionDto) {
+    public static CollectionModel mapInfosDtoToModel(CollectionUpdateDto collectionDto) {
         CollectionModel collectionModel = new CollectionModel();
         collectionModel.setName(collectionDto.getName());
         collectionModel.setDescription(collectionDto.getDescription());
         return collectionModel;
+    }
+
+    public static CollectionCreationModel mapCreationDtoToCreationModel(CollectionCreationDto collectionCreationDto) {
+        CollectionCreationModel collectionCreationModel = new CollectionCreationModel();
+        collectionCreationModel.setName(collectionCreationDto.getName());
+        collectionCreationModel.setDescription(collectionCreationDto.getDescription());
+        collectionCreationModel.setTemplateId(collectionCreationDto.getTemplateId());
+        return collectionCreationModel;
     }
 }

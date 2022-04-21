@@ -20,6 +20,21 @@ public class TemplateMapper {
         return templateModel;
     }
 
+    public static TemplateEntity mapModelToEntity(TemplateModel templateModel) {
+        TemplateEntity templateEntity = new TemplateEntity();
+
+        templateEntity.setId(templateModel.getId());
+        templateEntity.setName(templateModel.getName());
+        templateEntity.setDescription(templateModel.getDescription());
+        templateEntity.setItemLabelName(templateModel.getItemLabelName());
+        templateEntity.setVisibility(templateModel.getVisibility());
+        if(templateModel.getParent() != null) templateEntity.setParent(TemplateMapper.mapModelToEntity(templateModel.getParent()));
+        templateEntity.setOwner(UserMapper.mapModelToEntity(templateModel.getOwner()));
+        templateEntity.setProperties(templateModel.getProperties().stream().map(PropertyMapper::mapModelToEntity).toList());
+
+        return templateEntity;
+    }
+
     public static TemplateDto mapModelToDto(TemplateModel templateModel) {
         TemplateDto templateDto = new TemplateDto();
 

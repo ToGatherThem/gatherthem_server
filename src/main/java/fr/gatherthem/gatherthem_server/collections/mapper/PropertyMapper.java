@@ -15,6 +15,16 @@ public class PropertyMapper {
         return propertyModel;
     }
 
+    public static PropertyEntity mapModelToEntity(PropertyModel propertyModel) {
+        PropertyEntity propertyEntity = new PropertyEntity();
+
+        propertyEntity.setId(propertyModel.getId());
+        propertyEntity.setName(propertyModel.getName());
+        propertyEntity.setType(propertyModel.getType());
+
+        return propertyEntity;
+    }
+
     public static PropertyDto mapModelToDto(PropertyModel propertyModel) {
         PropertyDto propertyDto = new PropertyDto();
 

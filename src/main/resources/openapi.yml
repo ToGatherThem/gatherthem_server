@@ -283,7 +283,7 @@ components:
           type: string
         description:
           type: string
-        template_id:
+        templateId:
           type: string
           format: uuid
     Item:

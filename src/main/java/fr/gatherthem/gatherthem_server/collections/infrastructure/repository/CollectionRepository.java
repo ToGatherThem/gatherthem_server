@@ -2,10 +2,13 @@ package fr.gatherthem.gatherthem_server.collections.infrastructure.repository;
 
 import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
 import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
+import fr.gatherthem.gatherthem_server.collections.domain.model.TemplateModel;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
+import fr.gatherthem.gatherthem_server.collections.mapper.TemplateMapper;
 import fr.gatherthem.gatherthem_server.commons.dao.CollectionDao;
 import fr.gatherthem.gatherthem_server.commons.dao.ItemDao;
+import fr.gatherthem.gatherthem_server.commons.dao.TemplateDao;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -15,10 +18,12 @@ import java.util.stream.Collectors;
 public class CollectionRepository {
     private final CollectionDao collectionDao;
     private final ItemDao itemDao;
+    private final TemplateDao templateDao;
 
-    public CollectionRepository(CollectionDao collectionDao, ItemDao itemDao) {
+    public CollectionRepository(CollectionDao collectionDao, ItemDao itemDao, TemplateDao templateDao) {
         this.collectionDao = collectionDao;
         this.itemDao = itemDao;
+        this.templateDao = templateDao;
     }
 
     public List<CollectionModel> getCollectionByOwnerId(UUID id) {
@@ -43,5 +48,9 @@ public class CollectionRepository {
 
     public ItemModel saveItem(ItemModel item) {
         return ItemMapper.mapEntityToModel(itemDao.save(ItemMapper.mapModelToEntity(item)));
+    }
+
+    public Optional<TemplateModel> getTemplateById(UUID id) {
+        return templateDao.findById(id).map(TemplateMapper::mapEntityToModel);
     }
 }
