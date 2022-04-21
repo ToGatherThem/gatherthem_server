@@ -77,6 +77,20 @@ public class CollectionController {
         }
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deleteItem(@RequestParam("id")UUID id) {
+        try {
+            collectionService.deleteItemById(id);
+            return ResponseEntity.ok().build();
+        } catch (NotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+
+    }
+
     @PostMapping("/{id}/items")
     public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationAndUpdateDto newItem){
         try {

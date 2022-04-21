@@ -39,7 +39,9 @@ public class CollectionService {
         else throw new NotFoundException();
 
     }
-
+    public void deleteItemById(UUID id) throws NotFoundException{
+        collectionRepository.deleteItem(id);
+    }
     public void deleteCollectionById(UUID id) throws NotFoundException {
         collectionRepository.deleteCollection(id);
     }
