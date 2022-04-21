@@ -38,8 +38,8 @@ public class ItemController {
     }
 
 
-    @DeleteMapping("/{id}/items")
-    public ResponseEntity<Void> deleteItem(@PathVariable("id")UUID id) {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteItem(@RequestParam("id")UUID id) {
         try {
             itemService.deleteItemById(id);
             return ResponseEntity.ok().build();
