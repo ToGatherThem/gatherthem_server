@@ -79,7 +79,7 @@ public class CollectionController {
     }
 
     @PostMapping("/{id}/items")
-    public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationAndUpdateDto newItem){
+    public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationDto newItem){
         try {
             if(newItem.getLabel() == null || newItem.getLabel().isEmpty() || newItem.getLabel().length() > 50 || newItem.getObtentionDate() == null) return ResponseEntity.badRequest().build();
             ItemModel item = ItemMapper.mapCreationAndUpdateDtoToModel(newItem);
@@ -88,6 +88,7 @@ public class CollectionController {
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

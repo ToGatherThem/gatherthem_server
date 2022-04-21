@@ -78,7 +78,8 @@ public class ItemEntity {
     }
 
     public List<ItemPropertyEntity> getProperties() {
-        return properties;
+        if(properties == null) return List.of();
+        else return properties;
     }
 
     public void setProperties(List<ItemPropertyEntity> properties) {
