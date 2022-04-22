@@ -32,5 +32,8 @@ public class ItemService {
         itemRepository.deleteItem(id);
     }
 
+    public ItemModel getItem(UUID id) throws NotFoundException {
+        return itemRepository.findById(id).orElseThrow(NotFoundException::new);
+    }
 }
 

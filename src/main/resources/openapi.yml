@@ -183,6 +183,65 @@ paths:
                 $ref: '#/components/schemas/Item'
         '404':
           description: La collection n'a pas été trouvée
+  /items:
+    get:
+      summary: Consulter un item
+      tags:
+        - Item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Renvoie un item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: L'item n'a pas été trouvé
+    put:
+      summary: Modification d'un item
+      tags:
+        - Item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: L'item a été modifié
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: L'item n'a pas été trouvé
+    delete:
+      summary: Suppression d'un item
+      tags:
+        - Item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: L'item a été supprimé
+        '404':
+          description: L'item n'a pas été trouvé
 
 tags:
   - name: Utilisateur

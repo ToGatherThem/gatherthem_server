@@ -21,8 +21,19 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @PutMapping
-    public ResponseEntity<ItemDto> editItem(@RequestParam("id") UUID id, @RequestBody ItemUpdateDto itemDto) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ItemDto> getItem(@PathVariable UUID id) {
+        try {
+            ItemModel itemModel = itemService.getItem(id);
+            return ResponseEntity.ok(ItemMapper.mapModelToDto(itemModel));
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ItemDto> editItem(@PathVariable  UUID id, @RequestBody ItemUpdateDto itemDto) {
         try{
             ItemModel itemModel = ItemMapper.mapUpdateDtoToModel(itemDto);
             ItemModel res = itemService.updateItem(id, itemModel);
@@ -38,8 +49,8 @@ public class ItemController {
     }
 
 
-    @DeleteMapping
-    public ResponseEntity<Void> deleteItem(@RequestParam("id")UUID id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable UUID id) {
         try {
             itemService.deleteItemById(id);
             return ResponseEntity.ok().build();
