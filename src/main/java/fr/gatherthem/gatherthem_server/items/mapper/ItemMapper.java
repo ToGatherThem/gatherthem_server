@@ -1,20 +1,19 @@
-package fr.gatherthem.gatherthem_server.collections.mapper;
+package fr.gatherthem.gatherthem_server.items.mapper;
 
-import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
-
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemCreationDto;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemDto;
 import fr.gatherthem.gatherthem_server.commons.entity.ItemEntity;
+import fr.gatherthem.gatherthem_server.items.domain.model.ItemModel;
+import fr.gatherthem.gatherthem_server.items.exposition.dto.ItemDto;
+import fr.gatherthem.gatherthem_server.items.exposition.dto.ItemUpdateDto;
 
 public class ItemMapper {
+
     public static ItemModel mapEntityToModel(ItemEntity itemEntity) {
         ItemModel itemModel = new ItemModel();
         itemModel.setId(itemEntity.getId());
         itemModel.setLabel(itemEntity.getLabel());
         itemModel.setCreationDate(itemEntity.getCreationDate());
         itemModel.setObtentionDate(itemEntity.getObtentionDate());
-        itemModel.setProperties(itemEntity.getProperties().stream().map(ItemPropertyMapper::mapEntityToModel).toList());
-
+        itemModel.setCollection(CollectionMapper.mapEntityToModel(itemEntity.getCollection()));
         return itemModel;
     }
 
@@ -28,22 +27,19 @@ public class ItemMapper {
         return itemEntity;
     }
 
+    public static ItemModel mapUpdateDtoToModel(ItemUpdateDto itemUpdateDto) {
+        ItemModel itemModel = new ItemModel();
+        itemModel.setLabel(itemUpdateDto.getLabel());
+        itemModel.setObtentionDate(itemUpdateDto.getObtentionDate());
+        return itemModel;
+    }
+
     public static ItemDto mapModelToDto(ItemModel itemModel) {
         ItemDto itemDto = new ItemDto();
-
         itemDto.setId(itemModel.getId());
         itemDto.setLabel(itemModel.getLabel());
         itemDto.setCreationDate(itemModel.getCreationDate());
         itemDto.setObtentionDate(itemModel.getObtentionDate());
-        itemDto.setProperties(itemModel.getProperties().stream().map(ItemPropertyMapper::mapModelToDto).toList());
-
         return itemDto;
-    }
-
-    public static ItemModel mapCreationAndUpdateDtoToModel(ItemCreationDto itemDto) {
-        ItemModel itemModel = new ItemModel();
-        itemModel.setLabel(itemDto.getLabel());
-        itemModel.setObtentionDate(itemDto.getObtentionDate());
-        return itemModel;
     }
 }

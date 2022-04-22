@@ -1,16 +1,15 @@
-package fr.gatherthem.gatherthem_server.collections.domain.model;
+package fr.gatherthem.gatherthem_server.items.exposition.dto;
 
-import java.util.*;
+import java.util.Date;
+import java.util.UUID;
 
-public class ItemModel {
+public class ItemDto {
     private UUID id;
     private String label;
     private Date creationDate;
     private Date obtentionDate;
-    private CollectionModel collection;
-    private List<ItemPropertyModel> properties;
 
-    public ItemModel() {
+    public ItemDto() {
     }
 
     public UUID getId() {
@@ -43,22 +42,5 @@ public class ItemModel {
 
     public void setObtentionDate(Date obtentionDate) {
         this.obtentionDate = obtentionDate;
-    }
-
-    public CollectionModel getCollection() {
-        return collection;
-    }
-
-    public void setCollection(CollectionModel collection) {
-        this.collection = collection;
-    }
-
-    public List<ItemPropertyModel> getProperties() {
-        if(properties == null) return List.of();
-        else return properties;
-    }
-
-    public void setProperties(List<ItemPropertyModel> properties) {
-        this.properties = properties;
     }
 }

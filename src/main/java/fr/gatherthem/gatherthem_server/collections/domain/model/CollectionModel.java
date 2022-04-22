@@ -1,7 +1,5 @@
 package fr.gatherthem.gatherthem_server.collections.domain.model;
 
-import fr.gatherthem.gatherthem_server.user.domain.model.UserModel;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,6 +9,7 @@ public class CollectionModel {
     private String description;
     private Date creationDate;
     private UserModel owner;
+    private TemplateModel template;
 
     public CollectionModel() {
     }
@@ -55,5 +54,11 @@ public class CollectionModel {
         this.owner = owner;
     }
 
+    public TemplateModel getTemplate() {
+        return template;
+    }
 
+    public void setTemplate(TemplateModel template) {
+        this.template = template;
+    }
 }

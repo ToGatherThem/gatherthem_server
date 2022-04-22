@@ -1,16 +1,17 @@
-package fr.gatherthem.gatherthem_server.collections.exposition.dto;
+package fr.gatherthem.gatherthem_server.items.domain.model;
+
 
 import java.util.Date;
 import java.util.UUID;
 
-public class CollectionDto {
+public class CollectionModel {
     private UUID id;
     private String name;
     private String description;
     private Date creationDate;
-    private TemplateDto template;
+    private UserModel owner;
 
-    public CollectionDto() {
+    public CollectionModel() {
     }
 
     public UUID getId() {
@@ -45,11 +46,11 @@ public class CollectionDto {
         this.creationDate = creationDate;
     }
 
-    public TemplateDto getTemplate() {
-        return template;
+    public UserModel getOwner() {
+        return owner;
     }
 
-    public void setTemplate(TemplateDto template) {
-        this.template = template;
+    public void setOwner(UserModel owner) {
+        this.owner = owner;
     }
 }

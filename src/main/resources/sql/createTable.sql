@@ -98,7 +98,11 @@ insert into template(id, name, description, item_label_name, visibility, parent_
 values ('804a1231-e398-452d-8d0c-ce660383a8d3', 'DVD', '', 'Titre', 'PUBLIC',
         'b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'a3387036-4946-11ec-81d3-0242ac130003'),
        ('2b3baadf-baa4-4de6-b386-f85bdc1e0c3d', 'Blu-ray', '', 'Titre', 'PUBLIC',
-        'b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'a3387036-4946-11ec-81d3-0242ac130003');
+        'b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'a3387036-4946-11ec-81d3-0242ac130003'),
+       ('fddaf3e2-ef2f-404e-9246-5afa3f4f3ae6', 'VHS', '', 'Titre', 'PUBLIC',
+        'b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'a3387036-4946-11ec-81d3-0242ac130003'),
+       ('4abdc1e2-2206-4fa8-98b3-1d9fe43d4133', 'DVD Miniature', '', 'Titre', 'PUBLIC',
+        '804a1231-e398-452d-8d0c-ce660383a8d3', 'a3387036-4946-11ec-81d3-0242ac130003');
 
 insert into property(id, name, type, template_id)
 values

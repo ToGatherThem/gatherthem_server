@@ -1,6 +1,6 @@
 package fr.gatherthem.gatherthem_server.collections.exposition.dto;
 
-public class CollectionCreationAndUpdateDto {
+public class CollectionUpdateDto {
 
     private String name;
     private String description;

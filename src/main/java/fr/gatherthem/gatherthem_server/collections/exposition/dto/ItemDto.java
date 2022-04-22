@@ -1,6 +1,7 @@
 package fr.gatherthem.gatherthem_server.collections.exposition.dto;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class ItemDto {
@@ -8,6 +9,7 @@ public class ItemDto {
     private String label;
     private Date creationDate;
     private Date obtentionDate;
+    private List<ItemPropertyDto> properties;
 
     public ItemDto() {
     }
@@ -42,5 +44,13 @@ public class ItemDto {
 
     public void setObtentionDate(Date obtentionDate) {
         this.obtentionDate = obtentionDate;
+    }
+
+    public List<ItemPropertyDto> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<ItemPropertyDto> properties) {
+        this.properties = properties;
     }
 }
