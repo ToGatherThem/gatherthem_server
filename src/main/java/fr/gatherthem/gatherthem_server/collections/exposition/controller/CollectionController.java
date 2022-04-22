@@ -1,12 +1,10 @@
 package fr.gatherthem.gatherthem_server.collections.exposition.controller;
 
+import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionCreationModel;
 import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
 import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.collections.domain.service.CollectionService;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionDto;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.CollectionCreationAndUpdateDto;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemCreationAndUpdateDto;
-import fr.gatherthem.gatherthem_server.collections.exposition.dto.ItemDto;
+import fr.gatherthem.gatherthem_server.collections.exposition.dto.*;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
 import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
@@ -40,18 +38,21 @@ public class CollectionController {
     }
 
     @PostMapping
-    public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionCreationAndUpdateDto newColl){
-        try{
-            CollectionModel coll = CollectionMapper.mapInfosDtoToModel(newColl);
-            CollectionModel res = collectionService.saveCollection(coll);
-            return ResponseEntity.created(URI.create("/collections/" + res.getId())).body(CollectionMapper.mapModelToDto(res));
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().build();
-        }
+    public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionCreationDto collectionCreationDto){
+        if(collectionCreationDto.isValid()) {
+            CollectionCreationModel collectionCreationModel = CollectionMapper.mapCreationDtoToCreationModel(collectionCreationDto);
+
+            try {
+                CollectionModel collectionModel = collectionService.createCollection(collectionCreationModel);
+                return ResponseEntity.created(URI.create("/collections/" + collectionModel.getId())).body(CollectionMapper.mapModelToDto(collectionModel));
+            } catch (NotFoundException e) {
+                return ResponseEntity.notFound().build();
+            }
+        } else return ResponseEntity.badRequest().build();
     }
 
     @PutMapping
-    public ResponseEntity<CollectionDto> changeCollection(@RequestParam("id") UUID id, @RequestBody CollectionCreationAndUpdateDto newColl){
+    public ResponseEntity<CollectionDto> changeCollection(@RequestParam("id") UUID id, @RequestBody CollectionUpdateDto newColl){
         try{
             CollectionModel coll = CollectionMapper.mapInfosDtoToModel(newColl);
             CollectionModel res = collectionService.updateCollection(id, coll);
@@ -79,7 +80,7 @@ public class CollectionController {
 
 
     @PostMapping("/{id}/items")
-    public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationAndUpdateDto newItem){
+    public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationDto newItem){
         try {
             if(newItem.getLabel() == null || newItem.getLabel().isEmpty() || newItem.getLabel().length() > 50 || newItem.getObtentionDate() == null) return ResponseEntity.badRequest().build();
             ItemModel item = ItemMapper.mapCreationAndUpdateDtoToModel(newItem);
@@ -88,6 +89,7 @@ public class CollectionController {
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

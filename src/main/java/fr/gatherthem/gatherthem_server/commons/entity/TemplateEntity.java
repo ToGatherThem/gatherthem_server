@@ -4,18 +4,16 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "collection")
-public class CollectionEntity {
+@Table(name = "template")
+public class TemplateEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Type(type = "uuid-char")
-    @Column(name = "id")
     private UUID id;
 
     @Column(name = "name")
@@ -24,18 +22,24 @@ public class CollectionEntity {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "creation_date")
-    private Date creationDate;
+    @Column(name = "item_label_name")
+    private String itemLabelName;
+
+    @Column(name = "visibility")
+    private String visibility;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private TemplateEntity parent;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private UserEntity owner;
 
-    @ManyToOne
-    @JoinColumn(name = "template_id")
-    private TemplateEntity template;
+    @OneToMany(targetEntity = PropertyEntity.class, mappedBy = "template", cascade = CascadeType.ALL)
+    private List<PropertyEntity> properties;
 
-    public CollectionEntity() {
+    public TemplateEntity() {
     }
 
     public UUID getId() {
@@ -62,12 +66,28 @@ public class CollectionEntity {
         this.description = description;
     }
 
-    public Date getCreationDate() {
-        return creationDate;
+    public String getItemLabelName() {
+        return itemLabelName;
     }
 
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = Objects.requireNonNullElseGet(creationDate, Date::new);
+    public void setItemLabelName(String itemLabelName) {
+        this.itemLabelName = itemLabelName;
+    }
+
+    public String getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(String visibility) {
+        this.visibility = visibility;
+    }
+
+    public TemplateEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(TemplateEntity parent) {
+        this.parent = parent;
     }
 
     public UserEntity getOwner() {
@@ -78,11 +98,11 @@ public class CollectionEntity {
         this.owner = owner;
     }
 
-    public TemplateEntity getTemplate() {
-        return template;
+    public List<PropertyEntity> getProperties() {
+        return properties;
     }
 
-    public void setTemplate(TemplateEntity template) {
-        this.template = template;
+    public void setProperties(List<PropertyEntity> properties) {
+        this.properties = properties;
     }
 }

@@ -89,7 +89,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollectionCreationAndUpdate'
+              $ref: '#/components/schemas/CollectionCreation'
       responses:
         '201':
           description: La collection a été créée
@@ -106,12 +106,13 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollectionCreationAndUpdate'
+              $ref: '#/components/schemas/CollectionUpdate'
       responses:
         '200':
           description: La collection a été modifiée
@@ -130,6 +131,7 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       responses:
         '200':
@@ -146,6 +148,7 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       responses:
         '200':
@@ -168,6 +171,7 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       requestBody:
         content:
@@ -243,11 +247,28 @@ paths:
         '404':
           description: L'item n'a pas été trouvé
 
+  /templates:
+    get:
+      summary: Consulter les templates accessibles à l'utilisateur connecté
+      tags:
+        - Template
+      responses:
+        '200':
+          description: Liste des templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
+
 tags:
   - name: Utilisateur
     description: Gestion des utilisateurs
   - name: Collection
     description: Gestion des collections
+  - name: Template
+    description: Gestion des templates
 
 components:
   schemas:
@@ -305,18 +326,31 @@ components:
         creationDate:
           type: string
           format: date-time
-    CollectionCreationAndUpdate:
+        template:
+          $ref: '#/components/schemas/Template'
+    CollectionUpdate:
       type: object
       properties:
         name:
           type: string
         description:
           type: string
+    CollectionCreation:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        templateId:
+          type: string
+          format: uuid
     Item:
       type: object
       properties:
         id:
           type: string
+          format: uuid
         label:
           type: string
         creationDate:
@@ -385,3 +419,36 @@ components:
           type: string
         type:
           type: string
+    Template:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        itemLabelName:
+          type: string
+        visibility:
+          type: string
+        parent:
+          $ref: '#/components/schemas/Template'
+        owner:
+          $ref: '#/components/schemas/TemplateOwner'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    TemplateOwner:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email

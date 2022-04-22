@@ -1,7 +1,6 @@
 package fr.gatherthem.gatherthem_server.collections.domain.model;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class ItemModel {
     private UUID id;
@@ -9,6 +8,7 @@ public class ItemModel {
     private Date creationDate;
     private Date obtentionDate;
     private CollectionModel collection;
+    private List<ItemPropertyModel> properties;
 
     public ItemModel() {
     }
@@ -51,5 +51,14 @@ public class ItemModel {
 
     public void setCollection(CollectionModel collection) {
         this.collection = collection;
+    }
+
+    public List<ItemPropertyModel> getProperties() {
+        if(properties == null) return List.of();
+        else return properties;
+    }
+
+    public void setProperties(List<ItemPropertyModel> properties) {
+        this.properties = properties;
     }
 }

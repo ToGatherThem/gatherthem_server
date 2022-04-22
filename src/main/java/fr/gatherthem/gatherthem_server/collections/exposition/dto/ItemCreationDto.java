@@ -2,11 +2,11 @@ package fr.gatherthem.gatherthem_server.collections.exposition.dto;
 
 import java.util.Date;
 
-public class ItemCreationAndUpdateDto {
+public class ItemCreationDto {
     private String label;
     private Date obtentionDate;
 
-    public ItemCreationAndUpdateDto() {
+    public ItemCreationDto() {
     }
 
     public String getLabel() {
