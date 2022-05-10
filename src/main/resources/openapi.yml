@@ -78,9 +78,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Collections'
-        '204':
-          description: Pas de collection pour l'utilisateur
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
     post:
       summary: Ajout d'une collection
       tags:
@@ -89,7 +89,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollectionInfos'
+              $ref: '#/components/schemas/CollectionCreation'
       responses:
         '201':
           description: La collection a été créée
@@ -97,7 +97,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-    patch:
+    put:
       summary: Modification d'une collection
       tags:
         - Collection
@@ -106,12 +106,13 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CollectionInfos'
+              $ref: '#/components/schemas/CollectionUpdate'
       responses:
         '200':
           description: La collection a été modifiée
@@ -119,7 +120,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Collection'
-        '204':
+        '404':
           description: La collection n'a pas été modifié parce qu'elle n'a pas été trouvé
     delete:
       summary: Supprimer une collection
@@ -130,18 +131,144 @@ paths:
           name: id
           schema:
             type: string
+            format: uuid
           required: true
       responses:
         '200':
           description: La collection a été supprimée
-        '204':
+        '404':
           description: La collection n'a pas été trouvée
+  /collections/{id}/items:
+    get:
+      summary: Consulter les items d'une collection
+      tags:
+        - Collection
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        '200':
+          description: Liste des items d'une collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+        '404':
+          description: La collection n'a pas été trouvée
+
+    post:
+      summary: Ajout d'un item à une collection
+      tags:
+        - Collection
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreation'
+      responses:
+        '201':
+          description: L'item a été ajouté à la collection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: La collection n'a pas été trouvée
+  /items:
+    get:
+      summary: Consulter un item
+      tags:
+        - Item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Renvoie un item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: L'item n'a pas été trouvé
+    put:
+      summary: Modification d'un item
+      tags:
+        - Item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemUpdate'
+      responses:
+        '200':
+          description: L'item a été modifié
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '404':
+          description: L'item n'a pas été trouvé
+    delete:
+      summary: Suppression d'un item
+      tags:
+        - Item
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: L'item a été supprimé
+        '404':
+          description: L'item n'a pas été trouvé
+
+  /templates:
+    get:
+      summary: Consulter les templates accessibles à l'utilisateur connecté
+      tags:
+        - Template
+      responses:
+        '200':
+          description: Liste des templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
 
 tags:
   - name: Utilisateur
     description: Gestion des utilisateurs
   - name: Collection
     description: Gestion des collections
+  - name: Template
+    description: Gestion des templates
 
 components:
   schemas:
@@ -179,6 +306,7 @@ components:
           format: email
         password:
           type: string
+          format: password
     Authority:
       type: object
       properties:
@@ -191,26 +319,136 @@ components:
       properties:
         id:
           type: string
-        type:
-          type: string
         name:
           type: string
         description:
           type: string
         creationDate:
-          type: integer
-    Collections:
-      type: array
-      items:
-        $ref: '#/components/schemas/Collection'
-    CollectionInfos:
+          type: string
+          format: date-time
+        template:
+          $ref: '#/components/schemas/Template'
+    CollectionUpdate:
       type: object
       properties:
-        type:
-          type: string
         name:
           type: string
         description:
           type: string
+    CollectionCreation:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        templateId:
+          type: string
+          format: uuid
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        label:
+          type: string
         creationDate:
-          type: integer
+          type: string
+          format: date-time
+        obtentionDate:
+          type: string
+          format: date-time
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemProperty'
+    ItemCreation:
+      type: object
+      properties:
+        label:
+          type: string
+        obtentionDate:
+          type: string
+          format: date-time
+        properties:
+          type: array
+          items:
+            type: object
+            properties:
+              propertyId:
+                type: string
+                format: uuid
+              value:
+                type: string
+    ItemUpdate:
+      type: object
+      properties:
+        label:
+          type: string
+        obtentionDate:
+          type: string
+          format: date-time
+        properties:
+          type: array
+          items:
+            type: object
+            properties:
+              itemPropertyId:
+                type: string
+                format: uuid
+              value:
+                type: string
+    ItemProperty:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        value:
+          type: string
+        property:
+          $ref: '#/components/schemas/Property'
+    Property:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+    Template:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        itemLabelName:
+          type: string
+        visibility:
+          type: string
+        parent:
+          $ref: '#/components/schemas/Template'
+        owner:
+          $ref: '#/components/schemas/TemplateOwner'
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Property'
+    TemplateOwner:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+        email:
+          type: string
+          format: email
