@@ -1,9 +1,6 @@
 package fr.gatherthem.gatherthem_server.collections.domain.service;
 
-import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionCreationModel;
-import fr.gatherthem.gatherthem_server.collections.domain.model.CollectionModel;
-import fr.gatherthem.gatherthem_server.collections.domain.model.ItemModel;
-import fr.gatherthem.gatherthem_server.collections.domain.model.TemplateModel;
+import fr.gatherthem.gatherthem_server.collections.domain.model.*;
 import fr.gatherthem.gatherthem_server.collections.infrastructure.repository.CollectionRepository;
 import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
@@ -72,11 +69,15 @@ public class CollectionService {
         } else throw new NotFoundException();
     }
 
-    public ItemModel saveItem(UUID collectionId, ItemModel item) throws NotFoundException {
+    public ItemModel saveItem(UUID collectionId, ItemModel item, List<ItemPropertyCreationModel> propertyCreationModels) throws NotFoundException, Forbidden {
         Optional<CollectionModel> optionalCollectionModel = collectionRepository.findCollectionById(collectionId);
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         if(optionalCollectionModel.isPresent()){
             item.setCollection(optionalCollectionModel.get());
-            return collectionRepository.saveItem(item);
+            if(optionalCollectionModel.get().getOwner().getId().equals(user.getId())){
+                return collectionRepository.saveItem(item, propertyCreationModels);
+            } else throw new Forbidden();
         }
         else throw new NotFoundException();
     }

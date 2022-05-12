@@ -105,4 +105,12 @@ public class TemplateEntity {
     public void setProperties(List<PropertyEntity> properties) {
         this.properties = properties;
     }
+
+    public List<PropertyEntity> getAllProperties() {
+        List<PropertyEntity> propertiesList = this.getProperties();
+        if(this.parent != null) {
+            propertiesList.addAll(this.parent.getProperties());
+        }
+        return propertiesList;
+    }
 }
