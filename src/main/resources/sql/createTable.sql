@@ -118,7 +118,7 @@ values
     ('7166959a-bafb-4413-8355-ef78252b2f9c', 'Editeur', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
     ('ad743ce0-2109-4b63-a4c6-c3876cd2e182', 'Date de sortie', 'DATE', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
     ('0f9595cb-b819-460c-bb89-2e7f6d0f47bc', 'Genre', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
-    ('04257a99-b1c8-4ad5-9cca-f05afe0f7972', 'Durée', 'TIME', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    ('04257a99-b1c8-4ad5-9cca-f05afe0f7972', 'Durée (minutes)', 'DURATION', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
     ('a719204d-46bd-43e7-a34b-12f59e42e65c', 'Langue', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35');
 
 insert into collection(id, name, description, image, owner_id, template_id)
