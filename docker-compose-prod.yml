@@ -8,17 +8,7 @@ services:
       MYSQL_DATABASE: gatherthem
       LANG : C.UTF-8
     volumes:
-      - ./script/sql/createTable.sql:/docker-entrypoint-initdb.d/createTable.sql
-  mongo:
-    image: mongo:5.0.6
-    container_name: mongo_db
-    restart: always
-    environment:
-      MONGO_INITDB_DATABASE: GatherThemMongo
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-    volumes:
-      - ./src/main/resources/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./src/main/resources/sql/createTable.sql:/docker-entrypoint-initdb.d/createTable.sql
   gatherthem:
     restart: always
     ports:
