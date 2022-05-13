@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -107,7 +108,8 @@ public class TemplateEntity {
     }
 
     public List<PropertyEntity> getAllProperties() {
-        List<PropertyEntity> propertiesList = this.getProperties();
+        List<PropertyEntity> propertiesList = new java.util.ArrayList<>(Collections.emptyList());
+        propertiesList.addAll(this.getProperties());
         if(this.parent != null) {
             propertiesList.addAll(this.parent.getProperties());
         }
