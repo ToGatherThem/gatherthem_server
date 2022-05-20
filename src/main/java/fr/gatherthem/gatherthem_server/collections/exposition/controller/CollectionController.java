@@ -7,6 +7,7 @@ import fr.gatherthem.gatherthem_server.collections.domain.service.CollectionServ
 import fr.gatherthem.gatherthem_server.collections.exposition.dto.*;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
+import fr.gatherthem.gatherthem_server.collections.mapper.ItemPropertyMapper;
 import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/collections")
@@ -83,11 +85,13 @@ public class CollectionController {
     public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationDto newItem){
         try {
             if(newItem.getLabel() == null || newItem.getLabel().isEmpty() || newItem.getLabel().length() > 50 || newItem.getObtentionDate() == null) return ResponseEntity.badRequest().build();
-            ItemModel item = ItemMapper.mapCreationAndUpdateDtoToModel(newItem);
-            ItemModel res = collectionService.saveItem(collectionId, item);
+            ItemModel item = ItemMapper.mapCreationDtoToCreationModel(newItem);
+            ItemModel res = collectionService.saveItem(collectionId, item, newItem.getProperties().stream().map(ItemPropertyMapper::mapCreationDtoToCreationModel).collect(Collectors.toList()));
             return ResponseEntity.created(URI.create("/collections/" + collectionId + "/items/" + res.getId())).body(ItemMapper.mapModelToDto(res));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
+        } catch (Forbidden e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();

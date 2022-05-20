@@ -40,7 +40,7 @@ public class ItemMapper {
         return itemDto;
     }
 
-    public static ItemModel mapCreationAndUpdateDtoToModel(ItemCreationDto itemDto) {
+    public static ItemModel mapCreationDtoToCreationModel(ItemCreationDto itemDto) {
         ItemModel itemModel = new ItemModel();
         itemModel.setLabel(itemDto.getLabel());
         itemModel.setObtentionDate(itemDto.getObtentionDate());
