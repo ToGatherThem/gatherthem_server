@@ -138,6 +138,20 @@ paths:
           description: La collection a été supprimée
         '404':
           description: La collection n'a pas été trouvée
+  /collections/public:
+    get:
+      summary: Consulter les collections publiques
+      tags:
+        - Collection
+      responses:
+        '200':
+          description: Liste des collections publiques
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
   /collections/{id}/items:
     get:
       summary: Consulter les items d'une collection
@@ -246,6 +260,20 @@ paths:
           description: L'item a été supprimé
         '404':
           description: L'item n'a pas été trouvé
+  /items/public:
+    get:
+      summary: Consulter les items publics
+      tags:
+        - Item
+      responses:
+        '200':
+          description: Liste des items publics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
 
   /templates:
     get:
