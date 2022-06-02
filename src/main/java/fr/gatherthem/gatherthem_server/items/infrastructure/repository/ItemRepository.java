@@ -6,6 +6,7 @@ import fr.gatherthem.gatherthem_server.items.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.items.mapper.ItemMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +29,9 @@ public class ItemRepository {
     }
 
     public void deleteItem(UUID id){ itemDao.deleteById(id);}
+
+    public List<ItemModel> getPublicItems() {
+        return itemDao.findAll().stream().map(ItemMapper::mapEntityToModel).toList();
+    }
 
 }

@@ -26,6 +26,10 @@ public class CollectionService {
         return collectionRepository.getCollectionByOwnerId(user.getId());
     }
 
+    public List<CollectionModel> getPublicCollections(){
+        return collectionRepository.getPublicCollections();
+    }
+
     public CollectionModel updateCollection(UUID id, CollectionModel coll) throws NotFoundException {
         Optional<CollectionModel> optionalCollectionModel = collectionRepository.findCollectionById(id);
         if(optionalCollectionModel.isPresent()){

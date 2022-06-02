@@ -40,6 +40,16 @@ public class CollectionController {
         }
     }
 
+    @GetMapping("/public")
+    public ResponseEntity<List<CollectionDto>> getPublicCollections() {
+        try {
+            List<CollectionDto> collections = collectionService.getPublicCollections().stream().map(CollectionMapper::mapModelToDto).toList();
+            return ResponseEntity.ok(collections);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionCreationDto collectionCreationDto){
         if(collectionCreationDto.isValid()) {
