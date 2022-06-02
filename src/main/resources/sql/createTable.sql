@@ -61,6 +61,7 @@ create table item
 (
     id             UUID primary key not null,
     label          varchar(50)      not null,
+    image          longblob,
     creation_date  DATETIME default CURRENT_TIME,
     obtention_date DATE,
     collection_id  UUID             not null,
