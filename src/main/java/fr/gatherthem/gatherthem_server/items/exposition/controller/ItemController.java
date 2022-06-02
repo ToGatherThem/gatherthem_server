@@ -9,6 +9,7 @@ import fr.gatherthem.gatherthem_server.items.mapper.ItemMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -58,6 +59,16 @@ public class ItemController {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("/public")
+    public ResponseEntity<List<ItemDto>> getPublicItems() {
+        try {
+            List<ItemDto> items = itemService.getPublicItems().stream().map(ItemMapper::mapModelToDto).toList();
+            return ResponseEntity.ok(items);
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
     }

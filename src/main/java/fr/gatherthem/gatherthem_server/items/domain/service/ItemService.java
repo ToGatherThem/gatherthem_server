@@ -5,6 +5,7 @@ import fr.gatherthem.gatherthem_server.items.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.items.infrastructure.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +35,10 @@ public class ItemService {
 
     public ItemModel getItem(UUID id) throws NotFoundException {
         return itemRepository.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public List<ItemModel> getPublicItems() {
+        return itemRepository.getPublicItems();
     }
 }
 
