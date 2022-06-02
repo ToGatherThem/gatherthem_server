@@ -13,7 +13,7 @@ public class ItemMapper {
         itemModel.setLabel(itemEntity.getLabel());
         itemModel.setCreationDate(itemEntity.getCreationDate());
         itemModel.setObtentionDate(itemEntity.getObtentionDate());
-        itemModel.setCollection(CollectionMapper.mapEntityToModel(itemEntity.getCollection()));
+        itemModel.setProperties(itemEntity.getProperties().stream().map(ItemPropertyMapper::mapEntityToModel).toList());
         return itemModel;
     }
 
@@ -40,6 +40,7 @@ public class ItemMapper {
         itemDto.setLabel(itemModel.getLabel());
         itemDto.setCreationDate(itemModel.getCreationDate());
         itemDto.setObtentionDate(itemModel.getObtentionDate());
+        itemDto.setProperties(itemModel.getProperties().stream().map(ItemPropertyMapper::mapModelToDto).toList());
         return itemDto;
     }
 }
