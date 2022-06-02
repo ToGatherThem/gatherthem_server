@@ -5,6 +5,8 @@ public class CollectionUpdateDto {
     private String name;
     private String description;
 
+    private byte[] image;
+
     public String getName() {
         return name;
     }
@@ -19,5 +21,13 @@ public class CollectionUpdateDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

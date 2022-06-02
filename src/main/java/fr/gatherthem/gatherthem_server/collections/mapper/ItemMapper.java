@@ -42,8 +42,6 @@ public class ItemMapper {
         itemDto.setObtentionDate(itemModel.getObtentionDate());
         itemDto.setProperties(itemModel.getProperties().stream().map(ItemPropertyMapper::mapModelToDto).toList());
 
-        System.out.println(Arrays.toString(itemDto.getImage()));
-
         return itemDto;
     }
 

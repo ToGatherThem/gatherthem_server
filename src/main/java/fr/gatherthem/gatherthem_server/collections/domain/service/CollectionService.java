@@ -50,6 +50,7 @@ public class CollectionService {
             CollectionModel collectionToCreate = new CollectionModel();
             collectionToCreate.setName(collectionCreationModel.getName());
             collectionToCreate.setDescription(collectionCreationModel.getDescription());
+            collectionToCreate.setImage(collectionCreationModel.getImage());
             collectionToCreate.setOwner(UserMapper.mapAppUserToUserModel(user));
             collectionToCreate.setTemplate(templateModel);
 

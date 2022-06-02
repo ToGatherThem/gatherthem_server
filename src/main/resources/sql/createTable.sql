@@ -49,11 +49,11 @@ create table collection
     id            UUID primary key not null,
     name          varchar(50)      not null,
     description   varchar(1000),
-    image         varchar(1000),
+    image         longblob,
     creation_date DATETIME default CURRENT_TIME,
     owner_id       UUID             not null,
     foreign key (owner_id) references user (user_id),
-    template_id   UUID             /*not null TODO add template*/,
+    template_id   UUID              not null,
     foreign key (template_id) references template (id)
 );
 
@@ -122,10 +122,10 @@ values
     ('04257a99-b1c8-4ad5-9cca-f05afe0f7972', 'Durée (minutes)', 'DURATION', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
     ('a719204d-46bd-43e7-a34b-12f59e42e65c', 'Langue', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35');
 
-insert into collection(id, name, description, image, owner_id, template_id)
-values ('014edff9-8a67-4ce2-9f68-88b3e94f7171', 'Mes livres de fantasy', 'Et même que ils sont magiques mes livres', '',
+insert into collection(id, name, description, owner_id, template_id)
+values ('014edff9-8a67-4ce2-9f68-88b3e94f7171', 'Mes livres de fantasy', 'Et même que ils sont magiques mes livres',
         'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
-       ('c79343b8-835e-4a92-98ae-3de3593912b7', 'Mes livres en plastique', 'Ils flottent', '', 'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f');
+       ('c79343b8-835e-4a92-98ae-3de3593912b7', 'Mes livres en plastique', 'Ils flottent', 'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f');
 
 insert into item(id, label, obtention_date, collection_id)
 values ('d2cb5219-dbf2-4feb-b84d-0e2965160c82', concat('Harry Potter à l', char(39), 'école des sorcies'), '2018-03-02', '014edff9-8a67-4ce2-9f68-88b3e94f7171');
