@@ -13,6 +13,7 @@ public class ItemMapper {
         itemModel.setLabel(itemEntity.getLabel());
         itemModel.setCreationDate(itemEntity.getCreationDate());
         itemModel.setObtentionDate(itemEntity.getObtentionDate());
+        itemModel.setCollection(CollectionMapper.mapEntityToModel(itemEntity.getCollection()));
         itemModel.setProperties(itemEntity.getProperties().stream().map(ItemPropertyMapper::mapEntityToModel).toList());
         return itemModel;
     }
