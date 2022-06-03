@@ -46,7 +46,6 @@ public class ItemMapper {
     }
 
     public static ItemModel mapCreationDtoToCreationModel(ItemCreationDto itemDto) {
-        System.out.println(Arrays.toString(itemDto.getImage()));
         ItemModel itemModel = new ItemModel();
         itemModel.setLabel(itemDto.getLabel());
         itemModel.setImage(itemDto.getImage());
