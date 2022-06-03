@@ -111,7 +111,7 @@ public class TemplateEntity {
         List<PropertyEntity> propertiesList = new java.util.ArrayList<>(Collections.emptyList());
         propertiesList.addAll(this.getProperties());
         if(this.parent != null) {
-            propertiesList.addAll(this.parent.getProperties());
+            propertiesList.addAll(this.parent.getAllProperties());
         }
         return propertiesList;
     }
