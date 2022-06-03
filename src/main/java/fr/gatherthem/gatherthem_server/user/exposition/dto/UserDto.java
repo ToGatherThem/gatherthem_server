@@ -9,6 +9,10 @@ public class UserDto {
     private String email;
     private List<AuthorityDto> authorities;
 
+    private int nbCollections;
+
+    private int nbItems;
+
     public UserDto() {
     }
 
@@ -42,5 +46,21 @@ public class UserDto {
 
     public void setAuthorities(List<AuthorityDto> authorities) {
         this.authorities = authorities;
+    }
+
+    public int getNbCollections() {
+        return nbCollections;
+    }
+
+    public void setNbCollections(int nbCollections) {
+        this.nbCollections = nbCollections;
+    }
+
+    public int getNbItems() {
+        return nbItems;
+    }
+
+    public void setNbItems(int nbItems) {
+        this.nbItems = nbItems;
     }
 }
