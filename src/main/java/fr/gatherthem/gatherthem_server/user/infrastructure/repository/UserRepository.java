@@ -6,6 +6,7 @@ import fr.gatherthem.gatherthem_server.user.domain.model.UserModel;
 import fr.gatherthem.gatherthem_server.user.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class UserRepository {
@@ -31,5 +32,13 @@ public class UserRepository {
         userEntity.setPassword(encryptPassword);
 
         userDao.save(userEntity);
+    }
+
+    public int nbCollectionsByUserId(UUID userId) {
+        return userDao.countCollectionsByUserId(userId);
+    }
+
+    public int nbItemsByUserId(UUID userId) {
+        return userDao.countItemsByUserId(userId);
     }
 }
