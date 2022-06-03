@@ -6,6 +6,7 @@ import fr.gatherthem.gatherthem_server.items.exposition.dto.ItemDto;
 import fr.gatherthem.gatherthem_server.items.domain.service.ItemService;
 import fr.gatherthem.gatherthem_server.items.exposition.dto.ItemUpdateDto;
 import fr.gatherthem.gatherthem_server.items.mapper.ItemMapper;
+import fr.gatherthem.gatherthem_server.items.mapper.ItemPropertyMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,10 +35,10 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ItemDto> editItem(@PathVariable  UUID id, @RequestBody ItemUpdateDto itemDto) {
+    public ResponseEntity<ItemDto> editItem(@PathVariable UUID id, @RequestBody ItemUpdateDto itemDto) {
         try{
             ItemModel itemModel = ItemMapper.mapUpdateDtoToModel(itemDto);
-            ItemModel res = itemService.updateItem(id, itemModel);
+            ItemModel res = itemService.updateItem(id, itemModel, itemDto.getProperties().stream().map(ItemPropertyMapper::mapDtoToUpdateModel).toList());
             return ResponseEntity.ok(ItemMapper.mapModelToDto(res));
         }
         catch (NotFoundException e) {

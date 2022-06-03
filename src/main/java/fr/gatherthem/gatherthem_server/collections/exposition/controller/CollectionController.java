@@ -96,7 +96,7 @@ public class CollectionController {
         try {
             if(newItem.getLabel() == null || newItem.getLabel().isEmpty() || newItem.getLabel().length() > 50 || newItem.getObtentionDate() == null) return ResponseEntity.badRequest().build();
             ItemModel item = ItemMapper.mapCreationDtoToCreationModel(newItem);
-            ItemModel res = collectionService.saveItem(collectionId, item, newItem.getProperties().stream().map(ItemPropertyMapper::mapCreationDtoToCreationModel).collect(Collectors.toList()));
+            ItemModel res = collectionService.saveItem(collectionId, item, newItem.getProperties().stream().map(ItemPropertyMapper::mapCreationDtoToCreationModel).toList());
             return ResponseEntity.created(URI.create("/collections/" + collectionId + "/items/" + res.getId())).body(ItemMapper.mapModelToDto(res));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
