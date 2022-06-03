@@ -36,6 +36,7 @@ public class CollectionService {
             CollectionModel collectionModel = optionalCollectionModel.get();
             collectionModel.setName(coll.getName());
             collectionModel.setDescription(coll.getDescription());
+            collectionModel.setImage(coll.getImage());
             return collectionRepository.saveCollection(collectionModel);
         }
         else throw new NotFoundException();

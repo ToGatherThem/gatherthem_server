@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -31,7 +30,7 @@ public class CollectionController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<CollectionDto>> getCollection(){
+    public ResponseEntity<List<CollectionDto>> getCollections(){
         try{
             List<CollectionDto> collections = collectionService.getCollections().stream().map(CollectionMapper::mapModelToDto).toList();
             return ResponseEntity.ok(collections);
