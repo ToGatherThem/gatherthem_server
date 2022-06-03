@@ -25,6 +25,7 @@ public class ItemService {
             ItemModel itemModel = optionalItemModel.get();
             itemModel.setLabel(item.getLabel());
             itemModel.setObtentionDate(item.getObtentionDate());
+            itemModel.setImage(item.getImage());
             return itemRepository.saveItem(itemModel, itemPropertyModels);
         }
         else throw new NotFoundException();
