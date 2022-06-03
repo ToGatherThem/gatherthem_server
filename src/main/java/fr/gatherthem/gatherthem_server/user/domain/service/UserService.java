@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -56,5 +57,13 @@ public class UserService implements UserDetailsService {
         } else {
             userRepository.create(userRegister.getUsername(), userRegister.getEmail(), passwordEncoder.encode(userRegister.getPassword()));
         }
+    }
+
+    public int nbCollectionsByUserId(UUID userId) {
+        return userRepository.nbCollectionsByUserId(userId);
+    }
+
+    public int nbItemsByUserId(UUID userId) {
+        return userRepository.nbItemsByUserId(userId);
     }
 }

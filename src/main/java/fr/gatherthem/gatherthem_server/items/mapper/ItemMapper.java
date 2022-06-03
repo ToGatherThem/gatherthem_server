@@ -11,9 +11,11 @@ public class ItemMapper {
         ItemModel itemModel = new ItemModel();
         itemModel.setId(itemEntity.getId());
         itemModel.setLabel(itemEntity.getLabel());
+        itemModel.setImage(itemEntity.getImage());
         itemModel.setCreationDate(itemEntity.getCreationDate());
         itemModel.setObtentionDate(itemEntity.getObtentionDate());
         itemModel.setCollection(CollectionMapper.mapEntityToModel(itemEntity.getCollection()));
+        itemModel.setProperties(itemEntity.getProperties().stream().map(ItemPropertyMapper::mapEntityToModel).toList());
         return itemModel;
     }
 
@@ -21,6 +23,7 @@ public class ItemMapper {
         ItemEntity itemEntity = new ItemEntity();
         itemEntity.setId(itemModel.getId());
         itemEntity.setLabel(itemModel.getLabel());
+        itemEntity.setImage(itemModel.getImage());
         itemEntity.setCreationDate(itemModel.getCreationDate());
         itemEntity.setObtentionDate(itemModel.getObtentionDate());
         itemEntity.setCollection(CollectionMapper.mapModelToEntity(itemModel.getCollection()));
@@ -30,6 +33,7 @@ public class ItemMapper {
     public static ItemModel mapUpdateDtoToModel(ItemUpdateDto itemUpdateDto) {
         ItemModel itemModel = new ItemModel();
         itemModel.setLabel(itemUpdateDto.getLabel());
+        itemModel.setImage(itemUpdateDto.getImage());
         itemModel.setObtentionDate(itemUpdateDto.getObtentionDate());
         return itemModel;
     }
@@ -38,8 +42,10 @@ public class ItemMapper {
         ItemDto itemDto = new ItemDto();
         itemDto.setId(itemModel.getId());
         itemDto.setLabel(itemModel.getLabel());
+        itemDto.setImage(itemModel.getImage());
         itemDto.setCreationDate(itemModel.getCreationDate());
         itemDto.setObtentionDate(itemModel.getObtentionDate());
+        itemDto.setProperties(itemModel.getProperties().stream().map(ItemPropertyMapper::mapModelToDto).toList());
         return itemDto;
     }
 }

@@ -14,7 +14,6 @@ import fr.gatherthem.gatherthem_server.commons.dao.TemplateDao;
 import fr.gatherthem.gatherthem_server.commons.entity.ItemEntity;
 import fr.gatherthem.gatherthem_server.commons.entity.ItemPropertyEntity;
 import fr.gatherthem.gatherthem_server.commons.entity.PropertyEntity;
-import fr.gatherthem.gatherthem_server.commons.entity.TemplateEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -36,6 +35,10 @@ public class CollectionRepository {
 
     public List<CollectionModel> getCollectionByOwnerId(UUID id) {
         return collectionDao.findAllByUserId(id).stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
+    }
+
+    public List<CollectionModel> getPublicCollections() {
+        return collectionDao.findAll().stream().map(CollectionMapper::mapEntityToModel).collect(Collectors.toList());
     }
 
     public void deleteCollection(UUID id) {

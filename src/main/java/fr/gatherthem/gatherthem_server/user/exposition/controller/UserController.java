@@ -76,6 +76,8 @@ public class UserController {
         AppUser connectedUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDto userDto = UserMapper.mapAppUserToUserDto(connectedUser);
+        userDto.setNbCollections(userService.nbCollectionsByUserId(connectedUser.getId()));
+        userDto.setNbItems(userService.nbItemsByUserId(connectedUser.getId()));
 
         return ResponseEntity.ok().body(userDto);
     }

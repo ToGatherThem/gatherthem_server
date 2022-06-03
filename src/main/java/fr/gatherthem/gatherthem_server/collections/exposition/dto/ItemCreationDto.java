@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ItemCreationDto {
     private String label;
+    private byte[] image;
     private Date obtentionDate;
     private List<ItemPropertyCreationDto> properties;
 
@@ -17,6 +18,14 @@ public class ItemCreationDto {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getObtentionDate() {
