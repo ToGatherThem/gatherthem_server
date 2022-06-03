@@ -36,6 +36,7 @@ public class CollectionService {
             CollectionModel collectionModel = optionalCollectionModel.get();
             collectionModel.setName(coll.getName());
             collectionModel.setDescription(coll.getDescription());
+            collectionModel.setImage(coll.getImage());
             return collectionRepository.saveCollection(collectionModel);
         }
         else throw new NotFoundException();
@@ -54,6 +55,7 @@ public class CollectionService {
             CollectionModel collectionToCreate = new CollectionModel();
             collectionToCreate.setName(collectionCreationModel.getName());
             collectionToCreate.setDescription(collectionCreationModel.getDescription());
+            collectionToCreate.setImage(collectionCreationModel.getImage());
             collectionToCreate.setOwner(UserMapper.mapAppUserToUserModel(user));
             collectionToCreate.setTemplate(templateModel);
 
