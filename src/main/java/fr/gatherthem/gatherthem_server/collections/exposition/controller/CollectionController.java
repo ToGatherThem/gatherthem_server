@@ -30,7 +30,7 @@ public class CollectionController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<CollectionDto>> getCollection(){
+    public ResponseEntity<List<CollectionDto>> getCollections(){
         try{
             List<CollectionDto> collections = collectionService.getCollections().stream().map(CollectionMapper::mapModelToDto).toList();
             return ResponseEntity.ok(collections);

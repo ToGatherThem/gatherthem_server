@@ -24,6 +24,10 @@ public class CollectionEntity {
     @Column(name = "description")
     private String description;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB", length=10000000)
+    private byte[] image;
+
     @Column(name = "creation_date")
     private Date creationDate;
 
@@ -60,6 +64,14 @@ public class CollectionEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getCreationDate() {
