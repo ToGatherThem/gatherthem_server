@@ -1,5 +1,6 @@
 package fr.gatherthem.gatherthem_server.user.domain.service;
 
+import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.gatherthem.gatherthem_server.user.domain.model.Authority;
 import fr.gatherthem.gatherthem_server.user.domain.model.UserModel;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,5 +67,9 @@ public class UserService implements UserDetailsService {
 
     public int nbItemsByUserId(UUID userId) {
         return userRepository.nbItemsByUserId(userId);
+    }
+
+    public UserModel premium(UUID id) throws NotFoundException {
+       return userRepository.addAuthority(id, "PREMIUM");
     }
 }

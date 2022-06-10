@@ -1,8 +1,10 @@
 package fr.gatherthem.gatherthem_server.user.exposition.controller;
 
 import fr.gatherthem.gatherthem_server.commons.Utils;
+import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.gatherthem.gatherthem_server.user.domain.model.UserCredentials;
+import fr.gatherthem.gatherthem_server.user.domain.model.UserModel;
 import fr.gatherthem.gatherthem_server.user.domain.service.UserService;
 import fr.gatherthem.gatherthem_server.user.exception.EmailAlreadyExistException;
 import fr.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
@@ -80,5 +82,23 @@ public class UserController {
         userDto.setNbItems(userService.nbItemsByUserId(connectedUser.getId()));
 
         return ResponseEntity.ok().body(userDto);
+    }
+
+    @PutMapping("/premium")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserDto> premium() {
+        try{
+            AppUser connectedUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserModel user = userService.premium(connectedUser.getId());
+            UserDto userDto = UserMapper.mapUserModelToUserDto(user);
+            return ResponseEntity.ok().body(userDto);
+        }
+        catch (NotFoundException e){
+            return ResponseEntity.status(404).build();
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).build();
+        }
+
     }
 }
