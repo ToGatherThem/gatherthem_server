@@ -289,6 +289,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Template'
+    post:
+      summary: Ajout d'un template
+      tags:
+        - Template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateCreation'
+      responses:
+        '201':
+          description: Le template a été créé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
 
 tags:
   - name: Utilisateur
@@ -480,3 +496,28 @@ components:
         email:
           type: string
           format: email
+    TemplateCreation:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        itemLabelName:
+          type: string
+        visibility:
+          type: string
+        parentId:
+          type: string
+          format: uuid
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyCreation'
+    PropertyCreation:
+        type: object
+        properties:
+          name:
+            type: string
+          type:
+            type: string

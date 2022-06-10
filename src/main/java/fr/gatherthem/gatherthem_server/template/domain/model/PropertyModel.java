@@ -7,6 +7,8 @@ public class PropertyModel {
     private String name;
     private String type;
 
+    private TemplateModel template;
+
     public PropertyModel() {
     }
 
@@ -32,5 +34,13 @@ public class PropertyModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public TemplateModel getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(TemplateModel template) {
+        this.template = template;
     }
 }
