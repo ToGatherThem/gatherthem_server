@@ -28,6 +28,16 @@ paths:
           description: Identifiant incorrect
         '400':
           description: Paramètres fournis invalide
+  /user/logout:
+    get:
+      summary: Déconnexion de l'utilisateur
+      tags:
+        - Utilisateur
+      responses:
+        '200':
+          description: L'utilisateur a été déconnecté
+        '403':
+          description: L'utilisateur n'est pas connecté
   /user/register:
     post:
       summary: Inscription à gatherthem
