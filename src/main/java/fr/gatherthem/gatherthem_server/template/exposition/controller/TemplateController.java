@@ -19,6 +19,12 @@ public class TemplateController {
         this.templateService = templateService;
     }
 
+    /**
+     * Gets all templates belonging to the authenticated user or marked as public
+     * @return
+     *   <p>200 if the templates were retrieved, with the list of the templates</p>
+     *   <p>500 if an error occurred</p>
+     */
     @GetMapping()
     public ResponseEntity<List<TemplateDto>> getTemplates() {
         try {

@@ -23,6 +23,13 @@ public class ItemController {
         this.itemService = itemService;
     }
 
+    /**
+     * Gets an item information
+     * @param id the id of the item to retrieve
+     * @return
+     *   <p>200 if the item was successfully retrieved, with its information</p>
+     *   <p>404 if the item doesn't exist</p>
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ItemDto> getItem(@PathVariable UUID id) {
         try {
@@ -34,6 +41,15 @@ public class ItemController {
         }
     }
 
+    /**
+     * Updates an item
+     * @param id the id of the item to update
+     * @param itemDto the new item
+     * @return
+     *   <p>200 if the item was successfully updated, with the updated item</p>
+     *   <p>404 if the item doesn't exist</p>
+     *   <p>500 if an error occurred</p>
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ItemDto> editItem(@PathVariable UUID id, @RequestBody ItemUpdateDto itemDto) {
         try{
@@ -50,7 +66,14 @@ public class ItemController {
         }
     }
 
-
+    /**
+     * Deletes an item
+     * @param id the id of the item to delete
+     * @return
+     *   <p>200 if the item was successfully deleted</p>
+     *   <p>404 if the item doesn't exist</p>
+     *   <p>500 if an error occurred</p>
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable UUID id) {
         try {
@@ -64,6 +87,12 @@ public class ItemController {
         }
     }
 
+    /**
+     * Gets all public items
+     * @return
+     *   <p>200 if the items were retrieved, with the list of the items</p>
+     *   <p>500 if an error occurred</p>
+     */
     @GetMapping("/public")
     public ResponseEntity<List<ItemDto>> getPublicItems() {
         try {
