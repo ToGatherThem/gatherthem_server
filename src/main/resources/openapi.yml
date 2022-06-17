@@ -28,6 +28,16 @@ paths:
           description: Identifiant incorrect
         '400':
           description: Paramètres fournis invalide
+  /user/logout:
+    get:
+      summary: Déconnexion de l'utilisateur
+      tags:
+        - Utilisateur
+      responses:
+        '200':
+          description: L'utilisateur a été déconnecté
+        '403':
+          description: L'utilisateur n'est pas connecté
   /user/register:
     post:
       summary: Inscription à gatherthem
@@ -67,6 +77,25 @@ paths:
                 $ref: '#/components/schemas/User'
         '403':
           description: L'utilisateur n'est pas connecté
+  /user/update:
+    put:
+      summary: Modification du profil
+      tags:
+        - Utilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '200':
+          description: Le profil a été modifié
+        '401':
+          description: Mot de passe actuel incorrect
+        '404':
+          description: Le profil n'a pas été modifié parce qu'il n'a pas été trouvé
+        '409':
+          description: Nom d'utilisateur ou email déjà existant
   /collections:
     get:
       summary: Consulter ses collections

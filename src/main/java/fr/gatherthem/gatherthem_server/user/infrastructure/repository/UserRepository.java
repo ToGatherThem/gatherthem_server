@@ -27,6 +27,10 @@ public class UserRepository {
         this.authorityDao = authorityDao;
     }
 
+    public Optional<UserModel> findById(UUID id) {
+        return userDao.findById(id).map(UserMapper::mapEntityToModel);
+    }
+
     public Optional<UserModel> findByUsername(String username) {
         return userDao.findByUsername(username).map(UserMapper::mapEntityToModel);
     }
@@ -43,6 +47,10 @@ public class UserRepository {
         userEntity.setPassword(encryptPassword);
 
         userDao.save(userEntity);
+    }
+
+    public UserModel update(UserModel user) {
+        return UserMapper.mapEntityToModel(userDao.save(UserMapper.mapModelToEntity(user)));
     }
 
     public int nbCollectionsByUserId(UUID userId) {
