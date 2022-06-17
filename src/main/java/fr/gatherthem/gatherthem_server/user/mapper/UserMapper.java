@@ -30,6 +30,14 @@ public class UserMapper {
         return userEntity;
     }
 
+    public static UserDto mapModelToDto(UserModel userModel) {
+        UserDto userDto = new UserDto();
+        userDto.setId(userModel.getId());
+        userDto.setUsername(userModel.getUsername());
+        userDto.setEmail(userModel.getEmail());
+        return userDto;
+    }
+
     public static UserDto mapAppUserToUserDto(AppUser appUser) {
         UserDto userDto = new UserDto();
 

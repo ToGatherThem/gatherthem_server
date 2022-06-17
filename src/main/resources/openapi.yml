@@ -67,6 +67,25 @@ paths:
                 $ref: '#/components/schemas/User'
         '403':
           description: L'utilisateur n'est pas connecté
+  /user/update:
+    put:
+      summary: Modification du profil
+      tags:
+        - Utilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '200':
+          description: Le profil a été modifié
+        '401':
+          description: Mot de passe actuel incorrect
+        '404':
+          description: Le profil n'a pas été modifié parce qu'il n'a pas été trouvé
+        '409':
+          description: Nom d'utilisateur ou email déjà existant
   /collections:
     get:
       summary: Consulter ses collections
