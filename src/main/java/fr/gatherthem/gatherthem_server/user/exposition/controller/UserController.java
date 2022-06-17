@@ -105,7 +105,24 @@ public class UserController {
 
         return ResponseEntity.ok().body(userDto);
     }
-
+  
+    @PutMapping("/premium")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserDto> premium() {
+        try{
+            AppUser connectedUser = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserModel user = userService.premium(connectedUser.getId());
+            UserDto userDto = UserMapper.mapUserModelToUserDto(user);
+            return ResponseEntity.ok().body(userDto);
+        }
+        catch (NotFoundException e){
+            return ResponseEntity.status(404).build();
+        }
+        catch (Exception e){
+            return ResponseEntity.status(401).build();
+        }
+    }
+  
     @PutMapping("/update")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> updateProfile(@RequestBody UserUpdateDto userUpdateDto) {

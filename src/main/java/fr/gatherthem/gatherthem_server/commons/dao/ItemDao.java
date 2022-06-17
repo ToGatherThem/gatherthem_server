@@ -10,4 +10,8 @@ import java.util.UUID;
 public interface ItemDao extends JpaRepository<ItemEntity, UUID> {
     @Query("select item from ItemEntity item where item.collection.id = :collectionId order by item.creationDate desc")
     List<ItemEntity> findByCollectionId(UUID collectionId);
+
+    @Query("select count(item) from ItemEntity item where item.collection.id = :collectionId order by item.creationDate desc")
+    int findNumberOfItemsByCollectionId(UUID collectionId);
+
 }

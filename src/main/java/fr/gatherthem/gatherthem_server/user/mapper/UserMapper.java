@@ -58,4 +58,15 @@ public class UserMapper {
         userModel.setAuthorities(appUser.getAuthorityList());
         return userModel;
     }
+
+    public static UserDto mapUserModelToUserDto(UserModel userModel) {
+        UserDto userDto = new UserDto();
+
+        userDto.setId(userModel.getId());
+        userDto.setUsername(userModel.getUsername());
+        userDto.setEmail(userModel.getEmail());
+        userDto.setAuthorities(userModel.getAuthorities().stream().map(AuthorityMapper::mapModelToDto).toList());
+
+        return userDto;
+    }
 }

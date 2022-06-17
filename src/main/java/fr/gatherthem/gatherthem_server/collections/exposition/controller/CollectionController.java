@@ -59,6 +59,8 @@ public class CollectionController {
                 return ResponseEntity.created(URI.create("/collections/" + collectionModel.getId())).body(CollectionMapper.mapModelToDto(collectionModel));
             } catch (NotFoundException e) {
                 return ResponseEntity.notFound().build();
+            } catch (Forbidden e){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } else return ResponseEntity.badRequest().build();
     }
