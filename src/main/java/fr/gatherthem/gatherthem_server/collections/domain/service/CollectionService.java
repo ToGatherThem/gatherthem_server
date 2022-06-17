@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CollectionService {
@@ -46,12 +47,14 @@ public class CollectionService {
         collectionRepository.deleteCollection(id);
     }
 
-    public CollectionModel createCollection(CollectionCreationModel collectionCreationModel) throws NotFoundException {
+    public CollectionModel createCollection(CollectionCreationModel collectionCreationModel) throws NotFoundException, Forbidden {
         Optional<TemplateModel> optionalTemplateModel = collectionRepository.getTemplateById(collectionCreationModel.getTemplateId());
         if(optionalTemplateModel.isPresent()){
             TemplateModel templateModel = optionalTemplateModel.get();
             AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+            if (user.getAuthorityList().stream().noneMatch(authority -> authority.getCode().equals("PREMIUM")) && collectionRepository.getNumberOfCollectionByUserId(user.getId()) >= 2) {
+                throw new Forbidden();
+            }
             CollectionModel collectionToCreate = new CollectionModel();
             collectionToCreate.setName(collectionCreationModel.getName());
             collectionToCreate.setDescription(collectionCreationModel.getDescription());
@@ -78,8 +81,10 @@ public class CollectionService {
     public ItemModel saveItem(UUID collectionId, ItemModel item, List<ItemPropertyCreationModel> propertyCreationModels) throws NotFoundException, Forbidden {
         Optional<CollectionModel> optionalCollectionModel = collectionRepository.findCollectionById(collectionId);
         AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         if(optionalCollectionModel.isPresent()){
+            if (user.getAuthorityList().stream().noneMatch(authority -> authority.getCode().equals("PREMIUM")) && collectionRepository.findNumberOfItemsByCollectionId(optionalCollectionModel.get().getId()) >= 50){
+                throw new Forbidden();
+            }
             item.setCollection(optionalCollectionModel.get());
             if(optionalCollectionModel.get().getOwner().getId().equals(user.getId())){
                 return collectionRepository.saveItem(item, propertyCreationModels);

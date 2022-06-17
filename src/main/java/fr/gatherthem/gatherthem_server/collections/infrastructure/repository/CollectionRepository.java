@@ -7,10 +7,7 @@ import fr.gatherthem.gatherthem_server.collections.domain.model.TemplateModel;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.TemplateMapper;
-import fr.gatherthem.gatherthem_server.commons.dao.CollectionDao;
-import fr.gatherthem.gatherthem_server.commons.dao.ItemDao;
-import fr.gatherthem.gatherthem_server.commons.dao.ItemPropertyDao;
-import fr.gatherthem.gatherthem_server.commons.dao.TemplateDao;
+import fr.gatherthem.gatherthem_server.commons.dao.*;
 import fr.gatherthem.gatherthem_server.commons.entity.ItemEntity;
 import fr.gatherthem.gatherthem_server.commons.entity.ItemPropertyEntity;
 import fr.gatherthem.gatherthem_server.commons.entity.PropertyEntity;
@@ -25,12 +22,14 @@ public class CollectionRepository {
     private final ItemDao itemDao;
     private final TemplateDao templateDao;
     private final ItemPropertyDao itemPropertyDao;
+    private final UserDao userDao;
 
-    public CollectionRepository(CollectionDao collectionDao, ItemDao itemDao, TemplateDao templateDao, ItemPropertyDao itemPropertyDao) {
+    public CollectionRepository(CollectionDao collectionDao, ItemDao itemDao, TemplateDao templateDao, ItemPropertyDao itemPropertyDao, UserDao userDao) {
         this.collectionDao = collectionDao;
         this.itemDao = itemDao;
         this.templateDao = templateDao;
         this.itemPropertyDao = itemPropertyDao;
+        this.userDao = userDao;
     }
 
     public List<CollectionModel> getCollectionByOwnerId(UUID id) {
@@ -78,5 +77,13 @@ public class CollectionRepository {
 
     public Optional<TemplateModel> getTemplateById(UUID id) {
         return templateDao.findById(id).map(TemplateMapper::mapEntityToModel);
+    }
+
+    public int getNumberOfCollectionByUserId(UUID id) {
+        return userDao.countCollectionsByUserId(id);
+    }
+
+    public int findNumberOfItemsByCollectionId(UUID collection){
+        return itemDao.findNumberOfItemsByCollectionId(collection);
     }
 }
