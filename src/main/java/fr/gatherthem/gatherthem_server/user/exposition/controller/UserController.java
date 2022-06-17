@@ -43,6 +43,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Authenticates a user to the app
+     * @param userCredentials the credentials used to log in
+     * @return
+     *   <p>200 if the user was successfully authenticated, with their information</p>
+     *   <p>401 if the credentials are incorrect</p>
+     *   <p>500 if an error occurred</p>
+     */
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@RequestBody UserCredentials userCredentials) {
         try {
@@ -64,6 +72,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Logouts an authenticated user
+     * @return
+     *   <p>200 if the user was successfully logged out</p>
+     *   <p>403 if no user is authenticated</p>
+     *   <p>500 if an error occurred</p>
+     */
     @GetMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -78,6 +93,14 @@ public class UserController {
         }
     }
 
+    /**
+     * Creates a new user
+     * @param userRegisterDto the user to create
+     * @return
+     *   <p>201 if the user was successfully created</p>
+     *   <p>400 if the user to create is not valid</p>
+     *   <p>409 if the username or email is already taken</p>
+     */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserRegisterDto userRegisterDto) {
         if (userRegisterDto.getUsername() == null || !Utils.isValidEmail(userRegisterDto.getEmail()) || userRegisterDto.getPassword() == null) {
@@ -94,6 +117,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Gets a user information
+     * @return
+     *   <p>200 if the user was authenticated, with their information</p>
+     *   <p>403 if no user is authenticated</p>
+     */
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> getProfile() {
@@ -105,7 +134,15 @@ public class UserController {
 
         return ResponseEntity.ok().body(userDto);
     }
-  
+
+    /**
+     * Gives the premium authority to a user
+     * @return
+     *   <p>200 if the premium authority was successfully given to the user, with their information</p>
+     *   <p>401 if an error occurred</p>
+     *   <p>403 if no user is authenticated</p>
+     *   <p>404 if the user doesn't exist</p>
+     */
     @PutMapping("/premium")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> premium() {
@@ -122,7 +159,18 @@ public class UserController {
             return ResponseEntity.status(401).build();
         }
     }
-  
+
+    /**
+     * Updates a user information
+     * @param userUpdateDto the user to update
+     * @return
+     *   <p>200 if the user was successfully updated, with their information</p>
+     *   <p>400 if the user to update is not valid</p>
+     *   <p>401 if the current password is not right</p>
+     *   <p>403 if no user is authenticated</p>
+     *   <p>409 if the username or email is already taken</p>
+     *   <p>500 if an error occurred</p>
+     */
     @PutMapping("/update")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> updateProfile(@RequestBody UserUpdateDto userUpdateDto) {
