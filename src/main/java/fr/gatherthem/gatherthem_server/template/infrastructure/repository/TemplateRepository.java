@@ -37,7 +37,9 @@ public class TemplateRepository {
         TemplateEntity templateEntity = TemplateMapper.mapModelToEntity(templateModel);
         templateEntity.setProperties(new ArrayList<>());
 
-        templateEntity.setParent(templateDao.findById(templateModel.getParent().getId()).orElse(null));
+        if (templateModel.getParent() != null) {
+            templateEntity.setParent(templateDao.findById(templateModel.getParent().getId()).orElse(null));
+        }
 
         TemplateEntity templateCreated = templateDao.save(templateEntity);
 
