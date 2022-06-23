@@ -9,6 +9,7 @@ public class UserUpdateMapper {
         UserUpdateModel userUpdateModel = new UserUpdateModel();
         userUpdateModel.setUsername(userUpdateDto.getUsername());
         userUpdateModel.setEmail(userUpdateDto.getEmail());
+        userUpdateModel.setImage(userUpdateDto.getImage());
         userUpdateModel.setPassword(userUpdateDto.getPassword());
         userUpdateModel.setNewPassword(userUpdateDto.getNewPassword());
         userUpdateModel.setNewPasswordConfirm(userUpdateDto.getNewPasswordConfirm());

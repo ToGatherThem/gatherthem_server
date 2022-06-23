@@ -11,9 +11,10 @@ import java.util.UUID;
 public class AppUser extends User {
     private final UUID id;
     private final String email;
+    private final byte[] image;
     private final List<Authority> authorityList;
 
-    public AppUser(UUID id, String email, String username, String password, List<Authority> authorities) {
+    public AppUser(UUID id, String email, byte[] image, String username, String password, List<Authority> authorities) {
         super(
                 username,
                 password,
@@ -29,6 +30,7 @@ public class AppUser extends User {
 
         this.id = id;
         this.email = email;
+        this.image = image;
         this.authorityList = authorities;
     }
 
@@ -38,6 +40,10 @@ public class AppUser extends User {
 
     public String getEmail() {
         return email;
+    }
+
+    public byte[] getImage() {
+        return image;
     }
 
     public List<Authority> getAuthorityList() {

@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService {
             return new AppUser(
                     userModel.getId(),
                     userModel.getEmail(),
+                    userModel.getImage(),
                     userModel.getUsername(),
                     userModel.getPassword(),
                     userModel.getAuthorities()
@@ -77,6 +78,7 @@ public class UserService implements UserDetailsService {
             } else {
                 userModel.setUsername(user.getUsername());
                 userModel.setEmail(user.getEmail());
+                userModel.setImage(user.getImage());
                 if (!user.getNewPassword().isBlank()) {
                     userModel.setPassword(passwordEncoder.encode(user.getNewPassword()));
                 }

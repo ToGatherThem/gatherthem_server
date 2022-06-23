@@ -9,6 +9,7 @@ public class UserModel {
     private String username;
     private String password;
     private String email;
+    private byte[] image;
     private List<Authority> authorities;
 
     public UserModel() {
@@ -44,6 +45,14 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public List<Authority> getAuthorities() {

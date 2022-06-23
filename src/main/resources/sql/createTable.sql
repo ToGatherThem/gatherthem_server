@@ -5,7 +5,8 @@ create table user
     user_id  UUID primary key not null,
     username varchar(24)      not null unique,
     password varchar(1000)    not null,
-    email    varchar(320)     not null unique
+    email    varchar(320)     not null unique,
+    image    longblob
 );
 
 create table authority
