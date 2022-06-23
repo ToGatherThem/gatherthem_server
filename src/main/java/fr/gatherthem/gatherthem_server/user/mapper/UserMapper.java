@@ -47,6 +47,7 @@ public class UserMapper {
         userDto.setId(appUser.getId());
         userDto.setUsername(appUser.getUsername());
         userDto.setEmail(appUser.getEmail());
+        userDto.setImage(appUser.getImage());
         userDto.setAuthorities(appUser.getAuthorityList().stream().map(AuthorityMapper::mapModelToDto).toList());
 
         return userDto;
@@ -58,6 +59,7 @@ public class UserMapper {
         userModel.setId(appUser.getId());
         userModel.setUsername(appUser.getUsername());
         userModel.setEmail(appUser.getEmail());
+        userModel.setImage(appUser.getImage());
         userModel.setAuthorities(appUser.getAuthorityList());
         return userModel;
     }

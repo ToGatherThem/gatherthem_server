@@ -46,6 +46,7 @@ public class UserService implements UserDetailsService {
             return new AppUser(
                     userModel.getId(),
                     userModel.getEmail(),
+                    userModel.getImage(),
                     userModel.getUsername(),
                     userModel.getPassword(),
                     userModel.getAuthorities()
