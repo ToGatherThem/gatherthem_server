@@ -47,13 +47,13 @@ public class CollectionService {
         collectionRepository.deleteCollection(id);
     }
 
-    public CollectionModel createCollection(CollectionCreationModel collectionCreationModel) throws NotFoundException, Forbidden {
+    public CollectionModel createCollection(CollectionCreationModel collectionCreationModel) throws NotFoundException, ForbiddenException {
         Optional<TemplateModel> optionalTemplateModel = collectionRepository.getTemplateById(collectionCreationModel.getTemplateId());
         if(optionalTemplateModel.isPresent()){
             TemplateModel templateModel = optionalTemplateModel.get();
             AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (user.getAuthorityList().stream().noneMatch(authority -> authority.getCode().equals("PREMIUM")) && collectionRepository.getNumberOfCollectionByUserId(user.getId()) >= 2) {
-                throw new Forbidden();
+                throw new ForbiddenException();
             }
             CollectionModel collectionToCreate = new CollectionModel();
             collectionToCreate.setName(collectionCreationModel.getName());
@@ -83,7 +83,7 @@ public class CollectionService {
         AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(optionalCollectionModel.isPresent()){
             if (user.getAuthorityList().stream().noneMatch(authority -> authority.getCode().equals("PREMIUM")) && collectionRepository.findNumberOfItemsByCollectionId(optionalCollectionModel.get().getId()) >= 50){
-                throw new Forbidden();
+                throw new ForbiddenException();
             }
             item.setCollection(optionalCollectionModel.get());
             if(optionalCollectionModel.get().getOwner().getId().equals(user.getId())){
