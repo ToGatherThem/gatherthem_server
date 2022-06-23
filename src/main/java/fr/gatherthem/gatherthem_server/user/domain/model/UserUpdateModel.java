@@ -3,6 +3,7 @@ package fr.gatherthem.gatherthem_server.user.domain.model;
 public class UserUpdateModel {
     private String username;
     private String email;
+    private byte[] image;
     private String password;
     private String newPassword;
     private String newPasswordConfirm;
@@ -24,6 +25,14 @@ public class UserUpdateModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getPassword() {
