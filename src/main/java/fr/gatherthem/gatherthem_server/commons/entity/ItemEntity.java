@@ -21,6 +21,10 @@ public class ItemEntity {
     @Column(name = "label")
     private String label;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB", length=10000000)
+    private byte[] image;
+
     @Column(name = "creation_date")
     private Date creationDate;
 
@@ -51,6 +55,14 @@ public class ItemEntity {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getCreationDate() {

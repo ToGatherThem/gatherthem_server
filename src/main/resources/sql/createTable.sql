@@ -5,7 +5,8 @@ create table user
     user_id  UUID primary key not null,
     username varchar(24)      not null unique,
     password varchar(1000)    not null,
-    email    varchar(320)     not null unique
+    email    varchar(320)     not null unique,
+    image    longblob
 );
 
 create table authority
@@ -49,11 +50,11 @@ create table collection
     id            UUID primary key not null,
     name          varchar(50)      not null,
     description   varchar(1000),
-    image         varchar(1000),
+    image         longblob,
     creation_date DATETIME default CURRENT_TIME,
     owner_id       UUID             not null,
     foreign key (owner_id) references user (user_id),
-    template_id   UUID             /*not null TODO add template*/,
+    template_id   UUID              not null,
     foreign key (template_id) references template (id)
 );
 
@@ -61,6 +62,7 @@ create table item
 (
     id             UUID primary key not null,
     label          varchar(50)      not null,
+    image          longblob,
     creation_date  DATETIME default CURRENT_TIME,
     obtention_date DATE,
     collection_id  UUID             not null,
@@ -92,7 +94,8 @@ values ('a3387036-4946-11ec-81d3-0242ac130003', 'ADMIN'),
 
 insert into template(id, name, description, item_label_name, visibility, owner_id)
 values ('cec5f7b6-cfe3-4368-978c-22bb3010bf1f', 'Livre', '', 'Titre', 'PUBLIC', 'a3387036-4946-11ec-81d3-0242ac130003'),
-       ('b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'Film', '', 'Titre', 'PUBLIC', 'a3387036-4946-11ec-81d3-0242ac130003');
+       ('b54d5c56-e6d4-4dff-8f9d-b8d727838b35', 'Film', '', 'Titre', 'PUBLIC', 'a3387036-4946-11ec-81d3-0242ac130003'),
+       ('b0905c2d-49e1-4198-9b51-19e544d4d609', 'Pins', '', 'Nom', 'PUBLIC', 'a3387036-4946-11ec-81d3-0242ac130003');
 
 insert into template(id, name, description, item_label_name, visibility, parent_id, owner_id)
 values ('804a1231-e398-452d-8d0c-ce660383a8d3', 'DVD', '', 'Titre', 'PUBLIC',
@@ -107,24 +110,29 @@ values ('804a1231-e398-452d-8d0c-ce660383a8d3', 'DVD', '', 'Titre', 'PUBLIC',
 insert into property(id, name, type, template_id)
 values
     /* Properties de Livre */
-    ('4e9f8a75-bf23-4e48-986a-02a809fd59e6', 'Auteur', 'STRING', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
-    ('f267d75e-c2e4-4701-a539-5bb191736207', 'Editeur', 'STRING', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
+    ('4e9f8a75-bf23-4e48-986a-02a809fd59e6', 'Auteur', 'TEXT', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
+    ('f267d75e-c2e4-4701-a539-5bb191736207', 'Editeur', 'TEXT', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
     ('66913731-e7b0-4fcc-82c7-08ddffb768c6', 'Date de sortie', 'DATE', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
-    ('b563504f-f7fa-4c86-8d14-2e7d3b7f3679', 'Genre', 'STRING', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
+    ('b563504f-f7fa-4c86-8d14-2e7d3b7f3679', 'Genre', 'TEXT', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
+    ('b563504f-f7fa-4c86-8d14-2e7d3b7f3680', 'Résumé', 'LONGTEXT', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
     ('ced5456f-6110-4356-b9ec-ba1ff7d9c704', 'Nombre de pages', 'INTEGER', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
-    ('0875de54-3992-411e-8787-c2010bcc73fe', 'Langue', 'STRING', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
+    ('0875de54-3992-411e-8787-c2010bcc73fe', 'Langue', 'TEXT', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
     /* Properties de Film */
-    ('eecfc1d0-e964-4e51-a39d-8364b44a932f', 'Auteur', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
-    ('7166959a-bafb-4413-8355-ef78252b2f9c', 'Editeur', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    ('eecfc1d0-e964-4e51-a39d-8364b44a932f', 'Auteur', 'TEXT', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    ('7166959a-bafb-4413-8355-ef78252b2f9c', 'Editeur', 'TEXT', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
     ('ad743ce0-2109-4b63-a4c6-c3876cd2e182', 'Date de sortie', 'DATE', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
-    ('0f9595cb-b819-460c-bb89-2e7f6d0f47bc', 'Genre', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
-    ('04257a99-b1c8-4ad5-9cca-f05afe0f7972', 'Durée', 'TIME', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
-    ('a719204d-46bd-43e7-a34b-12f59e42e65c', 'Langue', 'STRING', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35');
+    ('0f9595cb-b819-460c-bb89-2e7f6d0f47bc', 'Genre', 'TEXT', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    ('b563504f-f7fa-4c86-8d14-2e7d3b7f3685', 'Résumé', 'LONGTEXT', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    ('04257a99-b1c8-4ad5-9cca-f05afe0f7972', 'Durée (minutes)', 'DURATION', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    ('a719204d-46bd-43e7-a34b-12f59e42e65c', 'Langue', 'TEXT', 'b54d5c56-e6d4-4dff-8f9d-b8d727838b35'),
+    /* Properties de Pins */
+    ('b0905c2d-49e1-4198-9b51-19e756d4d609', 'Couleur', 'TEXT', 'b0905c2d-49e1-4198-9b51-19e544d4d609'),
+    ('b0905c2d-49e1-4198-9b51-19e756d44489', 'Taille', 'INTEGER', 'b0905c2d-49e1-4198-9b51-19e544d4d609');
 
-insert into collection(id, name, description, image, owner_id, template_id)
-values ('014edff9-8a67-4ce2-9f68-88b3e94f7171', 'Mes livres de fantasy', 'Et même que ils sont magiques mes livres', '',
+insert into collection(id, name, description, owner_id, template_id)
+values ('014edff9-8a67-4ce2-9f68-88b3e94f7171', 'Mes livres de fantasy', 'Et même que ils sont magiques mes livres',
         'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f'),
-       ('c79343b8-835e-4a92-98ae-3de3593912b7', 'Mes livres en plastique', 'Ils flottent', '', 'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f');
+       ('c79343b8-835e-4a92-98ae-3de3593912b7', 'Mes livres en plastique', 'Ils flottent', 'a3387036-4946-11ec-81d3-0242ac130003', 'cec5f7b6-cfe3-4368-978c-22bb3010bf1f');
 
 insert into item(id, label, obtention_date, collection_id)
 values ('d2cb5219-dbf2-4feb-b84d-0e2965160c82', concat('Harry Potter à l', char(39), 'école des sorcies'), '2018-03-02', '014edff9-8a67-4ce2-9f68-88b3e94f7171');

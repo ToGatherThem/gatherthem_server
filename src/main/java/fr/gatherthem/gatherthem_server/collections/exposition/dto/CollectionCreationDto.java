@@ -5,6 +5,7 @@ import java.util.UUID;
 public class CollectionCreationDto {
     private String name;
     private String description;
+    private byte[] image;
     private UUID templateId;
 
     public CollectionCreationDto() {
@@ -24,6 +25,14 @@ public class CollectionCreationDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public UUID getTemplateId() {

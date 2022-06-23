@@ -7,7 +7,12 @@ public class UserDto {
     private UUID id;
     private String username;
     private String email;
+    private byte[] image;
     private List<AuthorityDto> authorities;
+
+    private int nbCollections;
+
+    private int nbItems;
 
     public UserDto() {
     }
@@ -36,11 +41,35 @@ public class UserDto {
         this.email = email;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public List<AuthorityDto> getAuthorities() {
         return authorities;
     }
 
     public void setAuthorities(List<AuthorityDto> authorities) {
         this.authorities = authorities;
+    }
+
+    public int getNbCollections() {
+        return nbCollections;
+    }
+
+    public void setNbCollections(int nbCollections) {
+        this.nbCollections = nbCollections;
+    }
+
+    public int getNbItems() {
+        return nbItems;
+    }
+
+    public void setNbItems(int nbItems) {
+        this.nbItems = nbItems;
     }
 }

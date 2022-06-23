@@ -7,6 +7,9 @@ public class CollectionDto {
     private UUID id;
     private String name;
     private String description;
+
+    private byte[] image;
+
     private Date creationDate;
     private TemplateDto template;
 
@@ -35,6 +38,14 @@ public class CollectionDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getCreationDate() {

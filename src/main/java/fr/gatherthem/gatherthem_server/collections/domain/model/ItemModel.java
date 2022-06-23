@@ -5,6 +5,7 @@ import java.util.*;
 public class ItemModel {
     private UUID id;
     private String label;
+    private byte[] image;
     private Date creationDate;
     private Date obtentionDate;
     private CollectionModel collection;
@@ -27,6 +28,14 @@ public class ItemModel {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getCreationDate() {

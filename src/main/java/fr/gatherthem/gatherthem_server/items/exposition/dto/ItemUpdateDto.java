@@ -1,10 +1,13 @@
 package fr.gatherthem.gatherthem_server.items.exposition.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public class ItemUpdateDto {
     private String label;
+    private byte[] image;
     private Date obtentionDate;
+    private List<ItemPropertyUpdateDto> properties;
 
     public ItemUpdateDto() {
     }
@@ -17,11 +20,27 @@ public class ItemUpdateDto {
         this.label = label;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public Date getObtentionDate() {
         return this.obtentionDate;
     }
 
     public void setObtentionDate(Date obtentionDate) {
         this.obtentionDate = obtentionDate;
+    }
+
+    public List<ItemPropertyUpdateDto> getProperties() {
+        return this.properties;
+    }
+
+    public void setProperties(List<ItemPropertyUpdateDto> properties) {
+        this.properties = properties;
     }
 }

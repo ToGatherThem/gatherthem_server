@@ -1,4 +1,4 @@
-package fr.gatherthem.gatherthem_server.template.domain.model;
+package fr.gatherthem.gatherthem_server.items.domain.model;
 
 import java.util.UUID;
 
@@ -6,8 +6,6 @@ public class PropertyModel {
     private UUID id;
     private String name;
     private String type;
-
-    private TemplateModel template;
 
     public PropertyModel() {
     }
@@ -34,13 +32,5 @@ public class PropertyModel {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public TemplateModel getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(TemplateModel template) {
-        this.template = template;
     }
 }

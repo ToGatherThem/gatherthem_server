@@ -1,14 +1,17 @@
 package fr.gatherthem.gatherthem_server.items.domain.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class ItemModel {
     private UUID id;
     private String label;
+    private byte[] image;
     private Date creationDate;
     private Date obtentionDate;
     private CollectionModel collection;
+    private List<ItemPropertyModel> properties;
 
     public ItemModel() {
     }
@@ -27,6 +30,14 @@ public class ItemModel {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Date getCreationDate() {
@@ -52,4 +63,14 @@ public class ItemModel {
     public void setCollection(CollectionModel collection) {
         this.collection = collection;
     }
+
+    public List<ItemPropertyModel> getProperties() {
+        if(properties == null) return List.of();
+        else return properties;
+    }
+
+    public void setProperties(List<ItemPropertyModel> properties) {
+        this.properties = properties;
+    }
+
 }

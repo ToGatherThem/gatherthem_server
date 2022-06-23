@@ -1,13 +1,16 @@
 package fr.gatherthem.gatherthem_server.items.exposition.dto;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class ItemDto {
     private UUID id;
     private String label;
+    private byte[] image;
     private Date creationDate;
     private Date obtentionDate;
+    private List<ItemPropertyDto> properties;
 
     public ItemDto() {
     }
@@ -28,6 +31,14 @@ public class ItemDto {
         this.label = label;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public Date getCreationDate() {
         return creationDate;
     }
@@ -42,5 +53,13 @@ public class ItemDto {
 
     public void setObtentionDate(Date obtentionDate) {
         this.obtentionDate = obtentionDate;
+    }
+
+    public List<ItemPropertyDto> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(List<ItemPropertyDto> properties) {
+        this.properties = properties;
     }
 }

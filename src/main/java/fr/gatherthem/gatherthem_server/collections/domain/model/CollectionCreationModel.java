@@ -5,6 +5,8 @@ import java.util.UUID;
 public class CollectionCreationModel {
     private String name;
     private String description;
+
+    private byte[] image;
     private UUID templateId;
 
     public CollectionCreationModel() {
@@ -24,6 +26,14 @@ public class CollectionCreationModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public UUID getTemplateId() {

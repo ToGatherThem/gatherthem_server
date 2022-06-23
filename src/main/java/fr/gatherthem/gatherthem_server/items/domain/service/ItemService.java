@@ -2,9 +2,11 @@ package fr.gatherthem.gatherthem_server.items.domain.service;
 
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.items.domain.model.ItemModel;
+import fr.gatherthem.gatherthem_server.items.domain.model.ItemPropertyUpdateModel;
 import fr.gatherthem.gatherthem_server.items.infrastructure.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,13 +19,14 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
 
-    public ItemModel updateItem(UUID id, ItemModel item) throws NotFoundException {
+    public ItemModel updateItem(UUID id, ItemModel item, List<ItemPropertyUpdateModel> itemPropertyModels) throws NotFoundException {
         Optional<ItemModel> optionalItemModel = itemRepository.findById(id);
         if (optionalItemModel.isPresent()) {
             ItemModel itemModel = optionalItemModel.get();
             itemModel.setLabel(item.getLabel());
             itemModel.setObtentionDate(item.getObtentionDate());
-            return itemRepository.saveItem(itemModel);
+            itemModel.setImage(item.getImage());
+            return itemRepository.updateItem(itemModel, itemPropertyModels);
         }
         else throw new NotFoundException();
     }
@@ -34,6 +37,10 @@ public class ItemService {
 
     public ItemModel getItem(UUID id) throws NotFoundException {
         return itemRepository.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public List<ItemModel> getPublicItems() {
+        return itemRepository.getPublicItems();
     }
 }
 

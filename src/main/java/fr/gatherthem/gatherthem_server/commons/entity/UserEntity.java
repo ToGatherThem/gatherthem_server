@@ -27,6 +27,10 @@ public class UserEntity {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB", length=10000000)
+    private byte[] image;
+
     @ManyToMany
     @JoinTable(
             name = "user_authority",
@@ -68,6 +72,14 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public List<AuthorityEntity> getAuthorities() {

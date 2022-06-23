@@ -1,9 +1,12 @@
 package fr.gatherthem.gatherthem_server.user.domain.service;
 
+import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.user.domain.AppUser;
 import fr.gatherthem.gatherthem_server.user.domain.model.Authority;
 import fr.gatherthem.gatherthem_server.user.domain.model.UserModel;
 import fr.gatherthem.gatherthem_server.user.domain.model.UserRegister;
+import fr.gatherthem.gatherthem_server.user.domain.model.UserUpdateModel;
+import fr.gatherthem.gatherthem_server.user.exception.CurrentPasswordIncorrectException;
 import fr.gatherthem.gatherthem_server.user.exception.EmailAlreadyExistException;
 import fr.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
 import fr.gatherthem.gatherthem_server.user.infrastructure.repository.UserRepository;
@@ -13,7 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -41,6 +46,7 @@ public class UserService implements UserDetailsService {
             return new AppUser(
                     userModel.getId(),
                     userModel.getEmail(),
+                    userModel.getImage(),
                     userModel.getUsername(),
                     userModel.getPassword(),
                     userModel.getAuthorities()
@@ -56,5 +62,41 @@ public class UserService implements UserDetailsService {
         } else {
             userRepository.create(userRegister.getUsername(), userRegister.getEmail(), passwordEncoder.encode(userRegister.getPassword()));
         }
+    }
+
+    public UserModel update(UUID id, UserUpdateModel user) throws UsernameAlreadyExistException, EmailAlreadyExistException, CurrentPasswordIncorrectException, NotFoundException {
+        Optional<UserModel> optionalUserModel = userRepository.findById(id);
+        if (optionalUserModel.isPresent()) {
+            UserModel userModel = optionalUserModel.get();
+
+            if (!userModel.getUsername().equals(user.getUsername()) && userRepository.findByUsername(user.getUsername()).isPresent()) {
+                throw new UsernameAlreadyExistException();
+            } else if (!userModel.getEmail().equals(user.getEmail()) && userRepository.findByEmail(user.getEmail()).isPresent()) {
+                throw new EmailAlreadyExistException();
+            } else if (!passwordEncoder.matches(user.getPassword(), userModel.getPassword())) {
+                throw new CurrentPasswordIncorrectException();
+            } else {
+                userModel.setUsername(user.getUsername());
+                userModel.setEmail(user.getEmail());
+                userModel.setImage(user.getImage());
+                if (!user.getNewPassword().isBlank()) {
+                    userModel.setPassword(passwordEncoder.encode(user.getNewPassword()));
+                }
+                return userRepository.update(userModel);
+            }
+        }
+        else throw new NotFoundException();
+    }
+
+    public int nbCollectionsByUserId(UUID userId) {
+        return userRepository.nbCollectionsByUserId(userId);
+    }
+
+    public int nbItemsByUserId(UUID userId) {
+        return userRepository.nbItemsByUserId(userId);
+    }
+
+    public UserModel premium(UUID id) throws NotFoundException {
+       return userRepository.addAuthority(id, "PREMIUM");
     }
 }
