@@ -3,9 +3,7 @@ package fr.gatherthem.gatherthem_server.template.domain.model;
 import java.util.List;
 import java.util.UUID;
 
-public class TemplateModel {
-    private UUID id;
-
+public class TemplateCreationModel {
     private String name;
 
     private String description;
@@ -14,21 +12,13 @@ public class TemplateModel {
 
     private String visibility;
 
-    private TemplateModel parent;
+    private UUID parentId;
 
-    private UserModel owner;
+    private UUID ownerId;
 
     private List<PropertyModel> properties;
 
-    public TemplateModel() {
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+    public TemplateCreationModel() {
     }
 
     public String getName() {
@@ -63,20 +53,20 @@ public class TemplateModel {
         this.visibility = visibility;
     }
 
-    public TemplateModel getParent() {
-        return parent;
+    public UUID getParentId() {
+        return parentId;
     }
 
-    public void setParent(TemplateModel parent) {
-        this.parent = parent;
+    public void setParentId(UUID parentId) {
+        this.parentId = parentId;
     }
 
-    public UserModel getOwner() {
-        return owner;
+    public UUID getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwner(UserModel owner) {
-        this.owner = owner;
+    public void setOwnerId(UUID ownerId) {
+        this.ownerId = ownerId;
     }
 
     public List<PropertyModel> getProperties() {
@@ -85,13 +75,5 @@ public class TemplateModel {
 
     public void setProperties(List<PropertyModel> properties) {
         this.properties = properties;
-    }
-
-    public boolean isAllPublic() {
-        if(parent != null) {
-            return parent.isAllPublic() && visibility.equals("public");
-        } else {
-            return visibility.equals("public");
-        }
     }
 }

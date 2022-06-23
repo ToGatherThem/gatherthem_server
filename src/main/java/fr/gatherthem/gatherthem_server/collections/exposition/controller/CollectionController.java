@@ -8,7 +8,7 @@ import fr.gatherthem.gatherthem_server.collections.exposition.dto.*;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemPropertyMapper;
-import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
+import fr.gatherthem.gatherthem_server.commons.exception.ForbiddenException;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/collections")
@@ -149,7 +148,7 @@ public class CollectionController {
             return ResponseEntity.created(URI.create("/collections/" + collectionId + "/items/" + res.getId())).body(ItemMapper.mapModelToDto(res));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (Forbidden e) {
+        } catch (ForbiddenException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,7 +173,7 @@ public class CollectionController {
             return ResponseEntity.ok(items);
         }catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (Forbidden e) {
+        } catch (ForbiddenException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
