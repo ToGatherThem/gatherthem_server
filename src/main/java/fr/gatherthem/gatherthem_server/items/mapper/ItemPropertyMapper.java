@@ -25,6 +25,7 @@ public class ItemPropertyMapper {
 
     public static ItemPropertyUpdateModel mapDtoToUpdateModel(ItemPropertyUpdateDto itemPropertyUpdateDto) {
         ItemPropertyUpdateModel itemPropertyUpdateModel = new ItemPropertyUpdateModel();
+        itemPropertyUpdateModel.setId(itemPropertyUpdateDto.getId());
         itemPropertyUpdateModel.setPropertyId(itemPropertyUpdateDto.getPropertyId());
         itemPropertyUpdateModel.setValue(itemPropertyUpdateDto.getValue());
         return itemPropertyUpdateModel;
