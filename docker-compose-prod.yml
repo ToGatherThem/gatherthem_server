@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.7'
 services:
   mariadb:
     env_file:
@@ -18,5 +18,5 @@ services:
     ports:
       - ${GATHERTHEM_PORT}:8080
     build:
-      dockerfile: .
+      dockerfile: Dockerfile
       context: .
