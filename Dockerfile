@@ -6,7 +6,7 @@ COPY pom.xml .
 
 # To package the application
 COPY src ./src
-COPY src/main/resources/application.docker-prod.properties ./src/main/resources/application.properties
+COPY src/main/resources/application.properties ./src/main/resources/application.properties
 RUN mvn clean package -Dmaven.test.skip
 
 ########run stage########
