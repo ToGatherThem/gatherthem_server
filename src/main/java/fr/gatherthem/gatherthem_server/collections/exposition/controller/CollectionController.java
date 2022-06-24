@@ -8,7 +8,7 @@ import fr.gatherthem.gatherthem_server.collections.exposition.dto.*;
 import fr.gatherthem.gatherthem_server.collections.mapper.CollectionMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemMapper;
 import fr.gatherthem.gatherthem_server.collections.mapper.ItemPropertyMapper;
-import fr.gatherthem.gatherthem_server.commons.exception.Forbidden;
+import fr.gatherthem.gatherthem_server.commons.exception.ForbiddenException;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/collections")
@@ -29,6 +28,12 @@ public class CollectionController {
         this.collectionService = collectionService;
     }
 
+    /**
+     * Gets a user collections
+     * @return
+     *   <p>200 if the collections were retrieved, with the list of the collections</p>
+     *   <p>500 if an error occurred</p>
+     */
     @GetMapping()
     public ResponseEntity<List<CollectionDto>> getCollections(){
         try{
@@ -39,6 +44,12 @@ public class CollectionController {
         }
     }
 
+    /**
+     * Gets all public collections
+     * @return
+     *   <p>200 if the collections were retrieved, with the list of the collections</p>
+     *   <p>500 if an error occurred</p>
+     */
     @GetMapping("/public")
     public ResponseEntity<List<CollectionDto>> getPublicCollections() {
         try {
@@ -49,6 +60,15 @@ public class CollectionController {
         }
     }
 
+    /**
+     * Creates a new collection
+     * @param collectionCreationDto the collection to create
+     * @return
+     *   <p>201 if the collection was successfully created, with the created collection</p>
+     *   <p>400 if the collection to create is not valid</p>
+     *   <p>403 if the user has reached the maximum number of collections they can have</p>
+     *   <p>404 if the template used by the collection doesn't exist</p>
+     */
     @PostMapping
     public ResponseEntity<CollectionDto> addCollection(@RequestBody CollectionCreationDto collectionCreationDto){
         if(collectionCreationDto.isValid()) {
@@ -59,10 +79,21 @@ public class CollectionController {
                 return ResponseEntity.created(URI.create("/collections/" + collectionModel.getId())).body(CollectionMapper.mapModelToDto(collectionModel));
             } catch (NotFoundException e) {
                 return ResponseEntity.notFound().build();
+            } catch (ForbiddenException e){
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } else return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Updates a collection
+     * @param id the id of the collection to update
+     * @param newColl the new collection
+     * @return
+     *   <p>200 if the collection was successfully updated, with the updated collection</p>
+     *   <p>404 if the collection doesn't exist</p>
+     *   <p>500 if an error occurred</p>
+     */
     @PutMapping
     public ResponseEntity<CollectionDto> changeCollection(@RequestParam("id") UUID id, @RequestBody CollectionUpdateDto newColl){
         try{
@@ -77,6 +108,14 @@ public class CollectionController {
         }
     }
 
+    /**
+     * Deletes a collection
+     * @param id the id of the collection to delete
+     * @return
+     *   <p>200 if the collection was successfully deleted</p>
+     *   <p>404 if the collection doesn't exist</p>
+     *   <p>500 if an error occurred</p>
+     */
     @DeleteMapping
     public ResponseEntity<Void> deleteCollection(@RequestParam("id") UUID id){
         try{
@@ -90,7 +129,16 @@ public class CollectionController {
         }
     }
 
-
+    /**
+     * Creates an item in a collection
+     * @param collectionId the id of the collection
+     * @param newItem the item to create
+     * @return
+     *   <p>201 if the item was successfully created, with the created item</p>
+     *   <p>403 if the user has reached the maximum number of items they can have in a collection</p>
+     *   <p>404 if the collection doesn't exist</p>
+     *   <p>500 if an error occurred</p>
+     */
     @PostMapping("/{id}/items")
     public ResponseEntity<ItemDto> addItem(@PathVariable("id") UUID collectionId, @RequestBody ItemCreationDto newItem){
         try {
@@ -100,7 +148,7 @@ public class CollectionController {
             return ResponseEntity.created(URI.create("/collections/" + collectionId + "/items/" + res.getId())).body(ItemMapper.mapModelToDto(res));
         } catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (Forbidden e) {
+        } catch (ForbiddenException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -108,6 +156,16 @@ public class CollectionController {
         }
     }
 
+    /**
+     * Gets items of a collection
+     * @param id the id of the collection
+     * @return
+     *   <p>200 if the items were retrieved, with the list of the items</p>
+     *   <p>400 if the collection is not valid</p>
+     *   <p>403 if the collection doesn't belong to the authenticated user</p>
+     *   <p>404 if the collection doesn't exist</p>
+     *   <p>500 if an error occurred</p>
+     */
     @GetMapping("/{id}/items")
     public ResponseEntity<List<ItemDto>> getItems(@PathVariable("id") String id){
         try{
@@ -115,7 +173,7 @@ public class CollectionController {
             return ResponseEntity.ok(items);
         }catch (NotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (Forbidden e) {
+        } catch (ForbiddenException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();

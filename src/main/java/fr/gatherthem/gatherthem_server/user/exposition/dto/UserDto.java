@@ -7,6 +7,7 @@ public class UserDto {
     private UUID id;
     private String username;
     private String email;
+    private byte[] image;
     private List<AuthorityDto> authorities;
 
     private int nbCollections;
@@ -38,6 +39,14 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public List<AuthorityDto> getAuthorities() {

@@ -28,6 +28,16 @@ paths:
           description: Identifiant incorrect
         '400':
           description: Paramètres fournis invalide
+  /user/logout:
+    get:
+      summary: Déconnexion de l'utilisateur
+      tags:
+        - Utilisateur
+      responses:
+        '200':
+          description: L'utilisateur a été déconnecté
+        '403':
+          description: L'utilisateur n'est pas connecté
   /user/register:
     post:
       summary: Inscription à gatherthem
@@ -67,6 +77,25 @@ paths:
                 $ref: '#/components/schemas/User'
         '403':
           description: L'utilisateur n'est pas connecté
+  /user/update:
+    put:
+      summary: Modification du profil
+      tags:
+        - Utilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '200':
+          description: Le profil a été modifié
+        '401':
+          description: Mot de passe actuel incorrect
+        '404':
+          description: Le profil n'a pas été modifié parce qu'il n'a pas été trouvé
+        '409':
+          description: Nom d'utilisateur ou email déjà existant
   /collections:
     get:
       summary: Consulter ses collections
@@ -289,6 +318,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Template'
+    post:
+      summary: Ajout d'un template
+      tags:
+        - Template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TemplateCreation'
+      responses:
+        '201':
+          description: Le template a été créé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
 
 tags:
   - name: Utilisateur
@@ -480,3 +525,28 @@ components:
         email:
           type: string
           format: email
+    TemplateCreation:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        itemLabelName:
+          type: string
+        visibility:
+          type: string
+        parentId:
+          type: string
+          format: uuid
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyCreation'
+    PropertyCreation:
+        type: object
+        properties:
+          name:
+            type: string
+          type:
+            type: string

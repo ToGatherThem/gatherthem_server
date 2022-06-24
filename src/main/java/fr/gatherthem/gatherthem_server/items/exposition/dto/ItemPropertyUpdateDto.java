@@ -3,10 +3,19 @@ package fr.gatherthem.gatherthem_server.items.exposition.dto;
 import java.util.UUID;
 
 public class ItemPropertyUpdateDto {
+    private UUID id;
     private UUID propertyId;
     private String value;
 
     public ItemPropertyUpdateDto() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getPropertyId() {
