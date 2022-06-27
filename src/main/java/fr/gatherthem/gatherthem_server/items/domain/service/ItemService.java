@@ -43,7 +43,7 @@ public class ItemService {
 
     public List<ItemModel> getPublicItems() {
         AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return itemRepository.getPublicItems().stream().filter(itemModel -> itemModel.getCollection().getOwner().getId() == user.getId()).toList();
+        return itemRepository.getPublicItems().stream().filter(itemModel -> itemModel.getCollection().getOwner().getId().equals(user.getId())).toList();
     }
 }
 
