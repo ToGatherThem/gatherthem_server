@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CollectionService {
@@ -28,7 +27,9 @@ public class CollectionService {
     }
 
     public List<CollectionModel> getPublicCollections(){
-        return collectionRepository.getPublicCollections();
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return collectionRepository.getPublicCollections().stream().filter(collectionModel -> collectionModel.getOwner().getId() == user.getId()).toList();
     }
 
     public CollectionModel updateCollection(UUID id, CollectionModel coll) throws NotFoundException {

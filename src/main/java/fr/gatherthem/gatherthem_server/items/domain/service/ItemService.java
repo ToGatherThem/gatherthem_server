@@ -4,6 +4,8 @@ import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.items.domain.model.ItemModel;
 import fr.gatherthem.gatherthem_server.items.domain.model.ItemPropertyUpdateModel;
 import fr.gatherthem.gatherthem_server.items.infrastructure.repository.ItemRepository;
+import fr.gatherthem.gatherthem_server.user.domain.AppUser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,7 +42,8 @@ public class ItemService {
     }
 
     public List<ItemModel> getPublicItems() {
-        return itemRepository.getPublicItems();
+        AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return itemRepository.getPublicItems().stream().filter(itemModel -> itemModel.getCollection().getOwner().getId() == user.getId()).toList();
     }
 }
 

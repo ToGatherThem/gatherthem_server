@@ -11,6 +11,7 @@ services:
       LANG : C.UTF-8
     volumes:
       - ./src/main/resources/sql/createTable.sql:/docker-entrypoint-initdb.d/createTable.sql
+      - ./dbdata:/var/lib/mysql
   gatherthem:
     env_file:
       - .env
