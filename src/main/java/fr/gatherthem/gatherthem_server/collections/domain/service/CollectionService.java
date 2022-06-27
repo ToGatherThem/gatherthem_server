@@ -29,7 +29,7 @@ public class CollectionService {
     public List<CollectionModel> getPublicCollections(){
         AppUser user = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return collectionRepository.getPublicCollections().stream().filter(collectionModel -> collectionModel.getOwner().getId() == user.getId()).toList();
+        return collectionRepository.getPublicCollections().stream().filter(collectionModel -> collectionModel.getOwner().getId().equals(user.getId())).toList();
     }
 
     public CollectionModel updateCollection(UUID id, CollectionModel coll) throws NotFoundException {
