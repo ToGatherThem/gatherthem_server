@@ -1,5 +1,6 @@
 package fr.gatherthem.gatherthem_server.user.exposition.controller;
 
+import fr.gatherthem.gatherthem_server.commons.Mail;
 import fr.gatherthem.gatherthem_server.commons.Utils;
 import fr.gatherthem.gatherthem_server.commons.exception.NotFoundException;
 import fr.gatherthem.gatherthem_server.user.domain.AppUser;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -38,9 +40,12 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
 
-    public UserController(AuthenticationManager authenticationManager, UserService userService) {
+    private final Mail mail;
+
+    public UserController(AuthenticationManager authenticationManager, UserService userService, Mail mail) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
+        this.mail = mail;
     }
 
     /**
@@ -52,7 +57,7 @@ public class UserController {
      *   <p>500 if an error occurred</p>
      */
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody UserCredentials userCredentials) {
+    public ResponseEntity<UserDto> login(@RequestBody UserCredentials userCredentials, HttpServletRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userCredentials.getUsername(), userCredentials.getPassword(), new ArrayList<>()));
             if (authentication.isAuthenticated()) {
@@ -61,6 +66,8 @@ public class UserController {
                 AppUser connectedUser = (AppUser) authentication.getPrincipal();
 
                 UserDto userDto = UserMapper.mapAppUserToUserDto(connectedUser);
+
+                mail.sendMail(connectedUser.getEmail(), "Gatherthem - Connexion", "Bonjour" + connectedUser.getUsername() + " Une connexion à votre compte Gatherthem a été effectué depuis l'adresse " + Optional.ofNullable(request.getHeader("X-FORWARDED-FOR")).orElse(request.getRemoteAddr()) + ".");
 
                 return ResponseEntity.ok().body(userDto);
             } else return ResponseEntity.status(401).build();
