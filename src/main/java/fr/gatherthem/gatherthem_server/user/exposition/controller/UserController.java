@@ -10,6 +10,7 @@ import fr.gatherthem.gatherthem_server.user.domain.model.UserUpdateModel;
 import fr.gatherthem.gatherthem_server.user.domain.service.UserService;
 import fr.gatherthem.gatherthem_server.user.exception.CurrentPasswordIncorrectException;
 import fr.gatherthem.gatherthem_server.user.exception.EmailAlreadyExistException;
+import fr.gatherthem.gatherthem_server.user.exception.EmailHasNotBeenVerifiedException;
 import fr.gatherthem.gatherthem_server.user.exception.UsernameAlreadyExistException;
 import fr.gatherthem.gatherthem_server.user.exposition.dto.UserDto;
 import fr.gatherthem.gatherthem_server.user.exposition.dto.UserRegisterDto;
@@ -67,7 +68,7 @@ public class UserController {
 
                 UserDto userDto = UserMapper.mapAppUserToUserDto(connectedUser);
 
-                mail.sendMail(connectedUser.getEmail(), "Gatherthem - Connexion", "Bonjour" + connectedUser.getUsername() + " Une connexion à votre compte Gatherthem a été effectué depuis l'adresse " + Optional.ofNullable(request.getHeader("X-FORWARDED-FOR")).orElse(request.getRemoteAddr()) + ".");
+                mail.sendMail(connectedUser.getEmail(), "Gatherthem - Connexion", "Bonjour " + connectedUser.getUsername() + ", une connexion à votre compte Gatherthem a été effectué depuis l'adresse " + Optional.ofNullable(request.getHeader("X-FORWARDED-FOR")).orElse(request.getRemoteAddr()) + ".");
 
                 return ResponseEntity.ok().body(userDto);
             } else return ResponseEntity.status(401).build();
@@ -110,7 +111,7 @@ public class UserController {
      */
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserRegisterDto userRegisterDto) {
-        if (userRegisterDto.getUsername() == null || !Utils.isValidEmail(userRegisterDto.getEmail()) || userRegisterDto.getPassword() == null) {
+        if (userRegisterDto.getUsername() == null || !Utils.isValidEmail(userRegisterDto.getEmail()) || userRegisterDto.getPassword() == null || userRegisterDto.getCode() == null) {
             return ResponseEntity.badRequest().build();
         } else {
             try {
@@ -120,8 +121,22 @@ public class UserController {
                 return ResponseEntity.status(409).body("USERNAME_ALREADY_EXIST");
             } catch (EmailAlreadyExistException e) {
                 return ResponseEntity.status(409).body("EMAIL_ALREADY_EXIST");
+            } catch (EmailHasNotBeenVerifiedException e) {
+                return ResponseEntity.status(409).body("EMAIL_HAS_NOT_BEEN_VERIFIED");
             }
         }
+    }
+
+    @PostMapping("/email/verify")
+    public ResponseEntity<String> verifyEmail(@RequestBody String email) {
+        if (Utils.isValidEmail(email)) {
+            try {
+                userService.verifyEmail(email);
+                return ResponseEntity.ok().build();
+            } catch (EmailAlreadyExistException e) {
+                return ResponseEntity.status(409).body("EMAIL_ALREADY_EXIST");
+            }
+        } else return ResponseEntity.badRequest().build();
     }
 
     /**

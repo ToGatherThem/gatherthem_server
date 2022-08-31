@@ -3,6 +3,7 @@ package fr.gatherthem.gatherthem_server.user.domain.model;
 public class UserRegister {
     private String username;
     private String email;
+    private String code;
     private String password;
 
     public UserRegister() {
@@ -30,5 +31,13 @@ public class UserRegister {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

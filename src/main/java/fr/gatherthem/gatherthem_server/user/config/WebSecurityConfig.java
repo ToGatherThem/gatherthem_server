@@ -55,6 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/user/register").anonymous()
+                .antMatchers("/user/email/verify").anonymous()
                 .anyRequest().authenticated()
                 .expressionHandler(webExpressionHandler()).and()
                 .csrf().disable();
